@@ -102,7 +102,7 @@ The output from the Layer 7 is flattened from 1 x 1 x 512 to the shape of 512 an
 
 | Input | Output | Keep-probablity of Dropout | Activation |
 |:-----:|:------:|:--------------------------:|:----------:|
-| 512 | nClasses | 0.5 | Softmax |
+| 512 | 2 (nClasses) | 0.5 | Softmax |
 
 # Short Description of Training:
 The network architecture is defined in the [train_classifier.py](codes/train_classifier.py) script.
@@ -117,9 +117,9 @@ In this network as well the GAP layer is used. So , after classification the loc
 # Results:
 ### The final accuracies of the model are as follows:
 
-* **Training Accuracy: 100.00 %**
-* **Validation Accuracy: 94.02 %**
-* **Testing Accuracy: 93.12 %**
+| Training Accuracy | Validation Accuracy | Testing Accuracy |
+|:-----------------:|:-------------------:|:----------------:|
+| 100.00 % | 94.02 % | 93.12 % |
 
 ### Prediction label superimposed on the input image fed to the network.
 
