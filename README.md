@@ -156,8 +156,8 @@ In case of cats for most of the images, the most red part of the heat map was ne
 However, in cases where the face of the cat or dog is not sufficient to identify it, the network looks for other features from other part of the object (as seen in the first set of figures).
 This is also evident from the following image of the dog. In this image because the face of the dog is not highlighted properly (due to a dark environment), so the network focusses on the legs of the dog to classify it.
 
-![dog_image_3_with_prediction](images/dog_image_2_with_prediction.png)
-![dog_image_3_gap_layer_superimposed](images/dog_image_2_with_gap_layer_superimposed.png)
+![dog_image_3_with_prediction](images/dog_image_3_with_prediction.png)
+![dog_image_3_gap_layer_superimposed](images/dog_image_3_with_gap_layer_superimposed.png)
 
 ### An overall look of the images with the superimposed heat maps is shown below.
 
