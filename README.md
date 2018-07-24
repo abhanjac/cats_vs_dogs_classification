@@ -115,7 +115,7 @@ According to the [Learning Deep Features for Discriminative Localization paper](
 In this network as well the GAP layer is used. So , after classification the localzation ability of the GAP layers are tested and the results are shown in the result section.
 
 # Results:
-The final accuracies of the model are as follows:
+### The final accuracies of the model are as follows:
 
 * **Training Accuracy: 100.00 %**
 * **Validation Accuracy: 94.02 %**
