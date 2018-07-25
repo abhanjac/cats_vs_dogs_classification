@@ -203,8 +203,9 @@ class CDclassifier( object ):
                                         padding='VALID', name=layerName )
         
         x = tf.layers.flatten(x)    # This will keep the 0th dimension 
-        # (batch size dimension) the same and flatten the rest of the elements 
-        # (which has shape 1x1x64 right now) into a single dimension (of size 64).
+        # (batch size dimension) the same and flatten the rest of the elements.
+        # So if the input was 1 x 1 x 64, then it is converted into a single 
+        # dimension (of size 64).
         
         self.layerOut[ layerName ] = x
 
