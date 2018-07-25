@@ -46,7 +46,7 @@ class CDclassifier( object ):
         layerIdx = '1'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=32, padding='SAME', \
-                use_bias=False, activation=None, name=layerName, \
+                use_bias=True, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -69,7 +69,7 @@ class CDclassifier( object ):
         layerIdx = '2'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=64, padding='SAME', \
-                use_bias=False, activation=None, name=layerName, \
+                use_bias=True, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -92,7 +92,7 @@ class CDclassifier( object ):
         layerIdx = '3'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=128, padding='SAME', \
-                use_bias=False, activation=None, name=layerName, \
+                use_bias=True, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -115,7 +115,7 @@ class CDclassifier( object ):
         layerIdx = '4'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=256, padding='SAME', \
-                use_bias=False, activation=None, name=layerName, \
+                use_bias=True, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -138,7 +138,7 @@ class CDclassifier( object ):
         layerIdx = '5'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=512, padding='SAME', \
-                use_bias=False, activation=None, name=layerName, \
+                use_bias=True, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -161,7 +161,7 @@ class CDclassifier( object ):
         layerIdx = '6'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(1,1), filters=256, padding='SAME', \
-                use_bias=False, activation=None, name=layerName, \
+                use_bias=True, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -184,7 +184,7 @@ class CDclassifier( object ):
         layerIdx = '7'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=512, padding='SAME', \
-                use_bias=False, activation=None, name=layerName, \
+                use_bias=True, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
