@@ -111,7 +111,7 @@ Training happens in batches and after every epoch the model evaluated on the val
 Another **json** file is also saved along with the checkpoint, which contains the details of the hyperparemeters (for the current epoch), training and validation accuracy upto the current epoch and also the training dataset mean and standard deviation.
 These information from this json file are reloaded into the model to restart the training, in case the training process got stopped or interrupted because of any reason.
 
-According to the [Learning Deep Features for Discriminative Localization paper](http://cnnlocalization.csail.mit.edu/Zhou_Learning_Deep_Features_CVPR_2016_paper.pdf), the **Global Max-Pooling (GMP)** layer is able to localize the parts of the image which the network emphasizes on to classify objects. 
+According to the [Weakly-supervised learning with convolutional neural networks paper](http://leon.bottou.org/publications/pdf/cvpr-2015.pdf), the **Global Max-Pooling (GMP)** layer is able to localize the parts of the image which the network emphasizes on to classify objects. 
 In this network as well the GMP layer is used. So , after classification the localzation ability of the GMP layers are tested and the results are shown in the result section.
 
 # Results:
@@ -128,7 +128,7 @@ In this network as well the GMP layer is used. So , after classification the loc
 
 Next, the regions where the network focusses to find the most important features to classify the object is found out.
 This is represented by the heat map shown below, obtained from the GMP layer.
-This is found out in the same manner as explained in the [Learning Deep Features for Discriminative Localization paper](http://cnnlocalization.csail.mit.edu/Zhou_Learning_Deep_Features_CVPR_2016_paper.pdf).
+This is found out in the same manner as explained in the [Weakly-supervised learning with convolutional neural networks paper](http://leon.bottou.org/publications/pdf/cvpr-2015.pdf).
 
 ### Heat map showing the regions where the network focusses to classify the objects.
 
