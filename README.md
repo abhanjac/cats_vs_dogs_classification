@@ -132,23 +132,23 @@ This is found out in the same manner as explained in the [Learning Deep Features
 
 ### Heat map showing the regions where the network focusses to classify the objects.
 
-![cat_image_1_gmp_layer_heat_map](images/cat_image_1_gap_layer_heat_map.png)
-![dog_image_1_gmp_layer_heat_map](images/dog_image_1_gap_layer_heat_map.png)
+![cat_image_1_gmp_layer_heat_map](images/cat_image_1_gmp_layer_heat_map.png)
+![dog_image_1_gmp_layer_heat_map](images/dog_image_1_gmp_layer_heat_map.png)
 
 ### Heat map superimposed on the actual image
 
-![cat_image_1_gmp_layer_superimposed](images/cat_image_1_with_gap_layer_superimposed.png)
-![dog_image_1_gmp_layer_superimposed](images/dog_image_1_with_gap_layer_superimposed.png)
+![cat_image_1_gmp_layer_superimposed](images/cat_image_1_with_gmp_layer_superimposed.png)
+![dog_image_1_gmp_layer_superimposed](images/dog_image_1_with_gmp_layer_superimposed.png)
 
 # Observations and Discussions:
 
 The heat map does not always engulfs the complete object as is seen in the next set of figures. 
 
 ![cat_image_2_with_prediction](images/cat_image_2_with_prediction.png)
-![cat_image_2_gmp_layer_superimposed](images/cat_image_2_with_gap_layer_superimposed.png)
+![cat_image_2_gmp_layer_superimposed](images/cat_image_2_with_gmp_layer_superimposed.png)
 
 ![dog_image_2_with_prediction](images/dog_image_2_with_prediction.png)
-![dog_image_2_gmp_layer_superimposed](images/dog_image_2_with_gap_layer_superimposed.png)
+![dog_image_2_gmp_layer_superimposed](images/dog_image_2_with_gmp_layer_superimposed.png)
 
 This is because the most important features required to classify the object is often only a part of the object and not its complete body.
 In case of cats for most of the images, the most red part of the heat map was near the face of the cat. As that is the most significant feature to identify it (as per the networks judgement). The same is true for dogs as well.
@@ -157,7 +157,7 @@ However, in cases where the face of the cat or dog is not sufficient to identify
 This is also evident from the following image of the dog. In this image because the face of the dog is not highlighted properly (due to a dark environment), so the network focusses on the legs of the dog to classify it.
 
 ![dog_image_3_with_prediction](images/dog_image_3_with_prediction.png)
-![dog_image_3_gmp_layer_superimposed](images/dog_image_3_with_gap_layer_superimposed.png)
+![dog_image_3_gmp_layer_superimposed](images/dog_image_3_with_gmp_layer_superimposed.png)
 
 ### An overall look of the images with the superimposed heat maps is shown below.
 
