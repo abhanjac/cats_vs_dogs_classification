@@ -1,5 +1,5 @@
 # Objective: 
-Classify images of **DOGs** or **CATs** into their respective categories and check the localization capability of the **Global Average Pooling** layer.
+Classify images of **DOGs** or **CATs** into their respective categories and check the localization capability of the **Global Max-Pooling** layer.
 
 This project is to get a good hands on with the tensorflow and getting used to the deep learning concepts.
 Classification is the most basic task that deep learning models or deep neural networks can do. 
@@ -40,7 +40,7 @@ The network is trained with large number of images and then it is tested on a se
 * [**config.py**](codes/config.py): All important parameters are defined here.
 * [**utils.py**](codes/utils.py): All important functions used for the training or testing process are defined here. There are also some extra functions as well.
 * [**train_classifier.py**](codes/train_classifier.py): The network model and training process are defined in this script.
-* [**application.py**](codes/application.py): Evaluates the output on fresh images and also shows the localization ability of the Global Average Pooling (GAP) layer of the network.
+* [**application.py**](codes/application.py): Evaluates the output on fresh images and also shows the localization ability of the Global Max-Pooling (GMP) layer of the network.
 
 # Network Architecture:
 
@@ -89,9 +89,9 @@ The network is trained with large number of images and then it is tested on a se
 | 14 x 14 x 512 | 1 x 1 | 256 | 14 x 14 x 256 | Relu |
 
 ### Layer 7:
-**Conv --> Relu --> Batch-Norm --> Global-Average-Pool (GAP)**
+**Conv --> Relu --> Batch-Norm --> Global-Max-Pool (GMP)**
 
-| Input | Conv Kernel | Filters | Output | Activation | GAP Kernel | GAP Stride | GAP Output |
+| Input | Conv Kernel | Filters | Output | Activation | GMP Kernel | GMP Stride | GMP Output |
 |:-----:|:-----------:|:-------:|:------:|:----------:|:----------:|:----------:|:----------:|
 | 14 x 14 x 256 | 3 x 3 | 512 | 14 x 14 x 512 | Relu | 14 x 14 | 1 | 1 x 1 x 512 |
 
@@ -111,8 +111,8 @@ Training happens in batches and after every epoch the model evaluated on the val
 Another **json** file is also saved along with the checkpoint, which contains the details of the hyperparemeters (for the current epoch), training and validation accuracy upto the current epoch and also the training dataset mean and standard deviation.
 These information from this json file are reloaded into the model to restart the training, in case the training process got stopped or interrupted because of any reason.
 
-According to the [Learning Deep Features for Discriminative Localization paper](http://cnnlocalization.csail.mit.edu/Zhou_Learning_Deep_Features_CVPR_2016_paper.pdf), the **Global Average Pooling (GAP)** layer is able to localize the parts of the image which the network emphasizes on to classify objects. 
-In this network as well the GAP layer is used. So , after classification the localzation ability of the GAP layers are tested and the results are shown in the result section.
+According to the [Learning Deep Features for Discriminative Localization paper](http://cnnlocalization.csail.mit.edu/Zhou_Learning_Deep_Features_CVPR_2016_paper.pdf), the **Global Max-Pooling (GMP)** layer is able to localize the parts of the image which the network emphasizes on to classify objects. 
+In this network as well the GMP layer is used. So , after classification the localzation ability of the GMP layers are tested and the results are shown in the result section.
 
 # Results:
 ### The final accuracies of the model are as follows:
@@ -127,28 +127,28 @@ In this network as well the GAP layer is used. So , after classification the loc
 ![dog_image_1_with_prediction](images/dog_image_1_with_prediction.png)
 
 Next, the regions where the network focusses to find the most important features to classify the object is found out.
-This is represented by the heat map shown below, obtained from the GAP layer.
+This is represented by the heat map shown below, obtained from the GMP layer.
 This is found out in the same manner as explained in the [Learning Deep Features for Discriminative Localization paper](http://cnnlocalization.csail.mit.edu/Zhou_Learning_Deep_Features_CVPR_2016_paper.pdf).
 
 ### Heat map showing the regions where the network focusses to classify the objects.
 
-![cat_image_1_gap_layer_heat_map](images/cat_image_1_gap_layer_heat_map.png)
-![dog_image_1_gap_layer_heat_map](images/dog_image_1_gap_layer_heat_map.png)
+![cat_image_1_gmp_layer_heat_map](images/cat_image_1_gap_layer_heat_map.png)
+![dog_image_1_gmp_layer_heat_map](images/dog_image_1_gap_layer_heat_map.png)
 
 ### Heat map superimposed on the actual image
 
-![cat_image_1_gap_layer_superimposed](images/cat_image_1_with_gap_layer_superimposed.png)
-![dog_image_1_gap_layer_superimposed](images/dog_image_1_with_gap_layer_superimposed.png)
+![cat_image_1_gmp_layer_superimposed](images/cat_image_1_with_gap_layer_superimposed.png)
+![dog_image_1_gmp_layer_superimposed](images/dog_image_1_with_gap_layer_superimposed.png)
 
 # Observations and Discussions:
 
 The heat map does not always engulfs the complete object as is seen in the next set of figures. 
 
 ![cat_image_2_with_prediction](images/cat_image_2_with_prediction.png)
-![cat_image_2_gap_layer_superimposed](images/cat_image_2_with_gap_layer_superimposed.png)
+![cat_image_2_gmp_layer_superimposed](images/cat_image_2_with_gap_layer_superimposed.png)
 
 ![dog_image_2_with_prediction](images/dog_image_2_with_prediction.png)
-![dog_image_2_gap_layer_superimposed](images/dog_image_2_with_gap_layer_superimposed.png)
+![dog_image_2_gmp_layer_superimposed](images/dog_image_2_with_gap_layer_superimposed.png)
 
 This is because the most important features required to classify the object is often only a part of the object and not its complete body.
 In case of cats for most of the images, the most red part of the heat map was near the face of the cat. As that is the most significant feature to identify it (as per the networks judgement). The same is true for dogs as well.
@@ -157,7 +157,7 @@ However, in cases where the face of the cat or dog is not sufficient to identify
 This is also evident from the following image of the dog. In this image because the face of the dog is not highlighted properly (due to a dark environment), so the network focusses on the legs of the dog to classify it.
 
 ![dog_image_3_with_prediction](images/dog_image_3_with_prediction.png)
-![dog_image_3_gap_layer_superimposed](images/dog_image_3_with_gap_layer_superimposed.png)
+![dog_image_3_gmp_layer_superimposed](images/dog_image_3_with_gap_layer_superimposed.png)
 
 ### An overall look of the images with the superimposed heat maps is shown below.
 
