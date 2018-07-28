@@ -196,7 +196,7 @@ class CDclassifier( object ):
         x = tf.layers.batch_normalization( x, training=self.isTraining, name=layerName )
         self.layerOut[ layerName ] = x
         
-        # This next layer will behave as the global average pooling layer. So 
+        # This next layer will behave as the global max pooling layer. So 
         # the padding has to be 'VALID' here to give a 1x1 output size. 
         layerName = 'pooling' + layerIdx
         x = tf.layers.max_pooling2d( x, pool_size=(14,14), strides=1, \
@@ -254,7 +254,7 @@ class CDclassifier( object ):
         lossTensor = tf.nn.softmax_cross_entropy_with_logits_v2( logits=logits, \
                                         labels=self.oneHotLabels )
         
-        # Return the average loss over this batch.
+        # Return the total loss over this batch.
         return tf.reduce_sum( lossTensor )
     
 #==============================================================================

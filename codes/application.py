@@ -40,27 +40,27 @@ if __name__ == '__main__':
         
 #-------------------------------------------------------------------------------
 
-        # Taking note of the kernel and bias weights between the GAP and fully
+        # Taking note of the kernel and bias weights between the GMP and fully
         # connected layer.
-        gap2FcW = classifier.getWeight( 'model/dense8/kernel' )
-        gap2FcB = classifier.getWeight( 'model/dense8/bias' )
+        gmp2FcW = classifier.getWeight( 'model/dense8/kernel' )
+        gmp2FcB = classifier.getWeight( 'model/dense8/bias' )
 
-        # Combining the channels of the GAP layer.
-        _, gapH, gapW, gapC = inferLayerOut['activation7'].shape
+        # Combining the channels of the GMP layer.
+        _, gmpH, gmpW, gmpC = inferLayerOut['activation7'].shape
 
 #-------------------------------------------------------------------------------
 
         # We will be looking into raw conv output and output via activation
-        # layer after the activation, before the gap layer.
-        combinedChannelConv = np.zeros( (gapH, gapW) )
+        # layer after the activation, before the gmp layer.
+        combinedChannelConv = np.zeros( (gmpH, gmpW) )
         
-        for j in range( gapC ):
+        for j in range( gmpC ):
             convOutput = inferLayerOut['conv7'][ :, :, :, j ]
             
-            convOutput = np.reshape( convOutput, (gapH, gapW) )
+            convOutput = np.reshape( convOutput, (gmpH, gmpW) )
 
-            w = gap2FcW[ j, inferPredLabel ]
-            b = gap2FcB[ inferPredLabel ]
+            w = gmp2FcW[ j, inferPredLabel ]
+            b = gmp2FcB[ inferPredLabel ]
             
             # Now normalizing the outputs.
             # This makes combinedChannelConv image more clear and smooth.
@@ -92,8 +92,8 @@ if __name__ == '__main__':
         combinedChannelConvImposed = np.asarray( combinedChannelConvImposed, \
                                                         dtype=np.uint8 )
         
-        cv2.imshow( 'gap filter (conv)', combinedChannelConv )
-        cv2.imshow( 'gap filter (conv imposed)', combinedChannelConvImposed )
+        cv2.imshow( 'gmp filter (conv)', combinedChannelConv )
+        cv2.imshow( 'gmp filter (conv imposed)', combinedChannelConvImposed )
         
 #-------------------------------------------------------------------------------
 
@@ -101,7 +101,7 @@ if __name__ == '__main__':
                 cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,255,0), 2, cv2.LINE_AA )
         
         ## Showing a combined image.
-        #cv2.imshow( 'Image and gap filter (conv)', np.hstack( ( img, \
+        #cv2.imshow( 'Image and gmp filter (conv)', np.hstack( ( img, \
                                             #combinedChannelConvImposed ) ) )
         
         print( 'Actual Label: {}, Predicted Label: {}'.format( \
