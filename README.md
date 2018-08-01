@@ -82,8 +82,6 @@ The network is trained with large number of images and then it is tested on a se
 ### Layer 6:
 **Conv --> Relu --> Batch-Norm**
 
-**[NOTE] This is a Bottle-neck Layer**
-
 | Input | Conv Kernel | Filters | Output | Activation |
 |:-----:|:-----------:|:-------:|:------:|:----------:|
 | 14 x 14 x 512 | 1 x 1 | 256 | 14 x 14 x 256 | Relu |
