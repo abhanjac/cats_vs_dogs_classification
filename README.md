@@ -1,5 +1,5 @@
 # Objective: 
-Classify images of **DOGs** or **CATs** into their respective categories and check the localization capability of the **Global Max-Pooling** layer.
+Classif images of **DOGs** or **CATs** into their respective categories and check the localization capability of the **Global Max-Pooling** layer.
 
 This project is to get a good hands on with the tensorflow and getting used to the deep learning concepts.
 Classification is the most basic task that deep learning models or deep neural networks can do. 
