@@ -268,8 +268,6 @@ class CDclassifier( object ):
             print( '\ntrainDir or validDir not provided. Aborting...' )
             return
         
-        self.isTraining = True    # Enabling the training flag. 
-        
         # SET INPUTS AND LABELS.
         # Batch size will be set during runtime as the last batch may not be of
         # the same size of the other batches.
@@ -330,6 +328,8 @@ class CDclassifier( object ):
             print( '\nStarting session. Optimizer: {}, Learning Rate: {}, ' \
                 'Batch Size: {}'.format( self.optimizerName, learningRate, batchSize ) )
             
+            self.isTraining = True    # Enabling the training flag. 
+
             # Define model saver.
             # Finding latest checkpoint and the latest completed epoch.
             metaFilePath, ckptPath, latestEpoch = findLatestCkpt( ckptDirPath, \
@@ -424,6 +424,10 @@ class CDclassifier( object ):
 
                 epochProcessTime = time.time()
                 
+                self.isTraining = True    # Enabling the training flag at the start 
+                # of the training phase of each epoch, as it will be disabled in the
+                # corresponding validation phase.
+
                 # TRAINING PHASE.
                 # This list contains the filepaths for all the images in trainDir.
                 listOfRemainingTrainImg = [ os.path.join( trainDir, i ) for i \
