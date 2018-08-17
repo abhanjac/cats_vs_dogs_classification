@@ -31,9 +31,12 @@ The network is trained with large number of images and then it is tested on a se
 * Images are all resized into **224 x 224 x 3** size before feeding into the network.
 * **Batch size: 100**
 * **Epochs: 38**
-* **Learning rate: 0.001 (upto epoch 1 - 24), 0.0003 (epoch 25 - 34), 0.0001 (epoch 35 - 38)**
+* **Learning rate: 0.001 (upto epoch 1 - 10), 0.0003 (epoch 11), 0.00013 (epoch 12 - 13), 0.00003 (epoch 14 - 15)**. 
+The learning rate is varied based on what fits best for increasing the validation accuracy.
 * **Number of Classes ( nClasses ): 2 ('dog', 'cat')**
-* The trained neural network model is saved at every epoch. And only the 5 latest such saved models or checkpoints are retained inside the [temp](codes/temp) directory.
+* A record of the **latest maximum validation accuracy** is also kept separately in a variable.
+* The trained neural network model is saved if the validation accuracy in the current epoch is **better** than the latest maximum validation accuracy. 
+* Only the 5 latest such saved models or checkpoints are retained inside the [temp](codes/temp) directory.
 * The training logs are saved in the [logs](codes/logs) directory.
 
 # Scripts and their Functions:
@@ -106,7 +109,13 @@ The output from the Layer 7 is flattened from 1 x 1 x 512 to the shape of 512 an
 The network architecture is defined in the [train_classifier.py](codes/train_classifier.py) script.
 The training process is also defined in the same script. Several functions and parameters that are used by the training process are defined in the [utils.py](codes/utils.py) and [config.py](codes/config.py) scripts.
 Training happens in batches and after every epoch the model evaluated on the validation set. The training and validation accuracy are recorded in the log files (which are saved in the [logs](codes/logs) directory) and then the model is saved as a checkpoint. 
-Another **json** file is also saved along with the checkpoint, which contains the details of the hyperparemeters (for the current epoch), training and validation accuracy upto the current epoch and also the training dataset mean and standard deviation.
+Another **json** file is also saved along with the checkpoint, which contains the following details:
+
+* Epoch, Batch size and Learning rate
+* Mean and Standard deviation of the training set.
+* Latest maximum validation accuracy.
+* A statistics of the epoch, learning rate, training loss, training accuracy and validation accuracy upto the current epoch.
+
 These information from this json file are reloaded into the model to restart the training, in case the training process got stopped or interrupted because of any reason.
 
 According to the [Weakly-supervised learning with convolutional neural networks paper](http://leon.bottou.org/publications/pdf/cvpr-2015.pdf), the **Global Max-Pooling (GMP)** layer is able to localize the parts of the image which the network emphasizes on to classify objects. 
@@ -117,7 +126,7 @@ In this network as well the GMP layer is used. So , after classification the loc
 
 | Training Accuracy | Validation Accuracy | Testing Accuracy |
 |:-----------------:|:-------------------:|:----------------:|
-| 100.00 % | 94.02 % | 93.12 % |
+| 99.99 % | 93.57 % | 93.48 % |
 
 ### Prediction label superimposed on the input image fed to the network.
 
