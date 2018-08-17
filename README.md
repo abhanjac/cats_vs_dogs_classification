@@ -1,4 +1,4 @@
-# Obje 
+# Objective: 
 Classify images of **DOGs** or **CATs** into their respective categories and check the localization capability of the **Global Max-Pooling** layer.
 
 This project is to get a good hands on with the tensorflow and getting used to the deep learning concepts.
