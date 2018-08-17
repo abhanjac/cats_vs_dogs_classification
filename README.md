@@ -30,7 +30,7 @@ The network is trained with large number of images and then it is tested on a se
 * The mean and standard deviation of the training set is used to normalize the images during training. And the same is used to normalize during validation and testing.
 * Images are all resized into **224 x 224 x 3** size before feeding into the network.
 * **Batch size: 100**
-* **Epochs: 38**
+* **Epochs: 15**
 * **Learning rate: 0.001 (upto epoch 1 - 10), 0.0003 (epoch 11), 0.00013 (epoch 12 - 13), 0.00003 (epoch 14 - 15)**. 
 The learning rate is varied based on what fits best for increasing the validation accuracy.
 * **Number of Classes ( nClasses ): 2 ('dog', 'cat')**
