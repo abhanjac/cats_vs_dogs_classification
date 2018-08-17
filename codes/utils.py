@@ -76,6 +76,7 @@ def createBatch( listOfImg=None, batchSize=None, createLabels=True, \
         
         img = cv2.resize( img, ( inputImgW, inputImgH ), interpolation=intpol )
         img = (img - mean) / std   # Converting image to range 0 to 1.
+        #img = dataAugment( img )    # Data augmentation. Makes code slow.
         #imgBatch.append( img / 255.0 )
         imgBatch.append( img )
         
@@ -105,7 +106,127 @@ def createBatch( listOfImg=None, batchSize=None, createLabels=True, \
 
 #===============================================================================
 
-def rename( location=None, categoryName=None, replace=False ):
+def createTfRecord( fileNameOfTfRec=None, dataLocation=None, createLabels=True, \
+                    shuffle=False, mean=0.0, std=1.0 ):
+    '''
+    This function takes in the location of the folder containing the images and 
+    creates a tfrecord file for the images present in that folder.
+    '''
+    if fileNameOfTfRec == None or dataLocation == None:
+        print( '\nfileNameOfTfRec, dataLocation not provided. Aborting...' )
+        return
+
+    # This list contains the filepaths for all the images in dataLocation.
+    listOfImg = [ os.path.join( dataLocation, i ) for i in os.listdir( dataLocation ) ]
+    
+    # Shuffling in place if shuffle flag is True (training phase). 
+    # This will be false for test and validation phases.
+    if shuffle:    random.shuffle( listOfImg )
+    
+    # Takes filepath of an image and extracts label from that using 
+    # className2labelIdx dictionary.
+    extractLabel = lambda x: className2labelIdx[ re.split( '\.|/| ', x )[-3] ]
+    
+    # Creating the list of labels.
+    listOfLabel = [ extractLabel(i) for i in listOfImg ]
+    
+    nSamples = len( listOfImg )
+    
+    # For running the TFRecordWriter there is no need for a session.
+    
+    # Defining the tfrecordWriter.
+    with tf.python_io.TFRecordWriter( fileNameOfTfRec ) as writer:
+    
+        # Scanning through all images and labels to create ombined feature object.
+        for idx, ( i, l ) in enumerate( zip( listOfImg, listOfLabel ) ):
+            img = cv2.imread(i)
+            h, w = img.shape[0], img.shape[1]
+            if h > inputImgH or w > inputImgW:  intpol = cv2.INTER_LINEAR
+            else:   intpol = cv2.INTER_AREA
+            
+            img = cv2.resize( img, ( inputImgW, inputImgH ), interpolation=intpol )
+            img = (img - mean) / std   # Normalizing the image with mean and sd.
+            #img = dataAugment( img )    # Data augmentation. Makes code slow.
+            #img = img / 255.0         # Converting image to range 0 to 1.
+            
+            # Creating a bytes feature object for the image.
+            img = img.tostring()     # Serializing the image.
+            img = tf.compat.as_bytes( img )   # String image to bytes image.
+            bytesListImg = tf.train.BytesList( value=[ img ] )
+            bytesFeatureImg = tf.train.Feature( bytes_list=bytesListImg )
+            
+            if createLabels:
+                # Creating an int64 feature object for the label.
+                int64ListLabel = tf.train.Int64List( value=[ l ] )
+                int64FeatureLabel = tf.train.Feature( int64_list=int64ListLabel )
+            
+                features = tf.train.Features( feature={ 'image': bytesFeatureImg, \
+                                                        'label': int64FeatureLabel } )
+            else:
+                features = tf.train.Features( feature={ 'image': bytesFeatureImg } )
+                
+            # Creating an example object.
+            example = tf.train.Example( features=features )
+            
+            # Writing the example to the file.
+            writer.write( example.SerializeToString() ) 
+            
+            print( 'Image and label written {}/{}'.format( idx+1, nSamples ) ) 
+    
+    print( '\nAll images recorded and {} created.\n'.format( fileNameOfTfRec ) )
+
+#===============================================================================
+
+# Pixels should be in range of 0 to 1 and a random value from the range of 
+# [ -delta to +delta ] is added to all the pixels.
+randomBrightness = lambda img: tf.Session().run( tf.image.random_brightness( \
+                                                    img, brightnessDelta ) )
+
+#-------------------------------------------------------------------------------
+
+# Pixels should be in range of 0 to 1 and a random value from the range of 
+# [ lower to upper ] (lower and upper should be both +ve values) is added to all
+# the pixels.
+# For each channel, this operation computes mean of image pixels in the channel 
+# and then adjusts each component x of each pixel to 
+# (x - mean) * contrast_factor + mean.
+randomContrast = lambda img: tf.Session().run( tf.image.random_contrast( \
+                                        img, contrastLower, contrastUpper ) )
+
+#-------------------------------------------------------------------------------
+
+# With a 1 in 2 chance, outputs the flipped image (left to right flip).
+randomFlipHori = lambda img: tf.Session().run( tf.image.random_flip_left_right( img ) )
+
+#-------------------------------------------------------------------------------
+
+# With a 1 in 2 chance, outputs the flipped image (top to bottom flip).
+randomFlipVert = lambda img: tf.Session().run( tf.image.random_flip_up_down( img ) )
+
+#===============================================================================
+
+def dataAugment( img ):
+    '''
+    Data augmentation function. Randomly selects what kind of data augmentation 
+    operation is to be performed on the input image.
+    Input image must have all pixels between 0 and 1.
+    '''
+    
+    # Generating the choice of which augmentations to use (randomly).
+    nOptions = 4    # Number or augmentation options (we have 4 options).
+    choice = np.random.rand(4) - 0.5 > 0     # A boolean array.
+    outImg = img
+
+    if choice[0]:   outImg = randomBrightness( outImg )
+    if choice[1]:   outImg = randomContrast( outImg )
+    if choice[2]:   outImg = randomFlipHori( outImg )
+    if choice[3]:   outImg = randomFlipVert( outImg )
+    
+    return outImg
+
+#===============================================================================
+
+def rename( location=None, categoryName=None, replace=False, startIdx=0 ):
     '''
     If there is a folder of images which needs to be renamed with the name of a
     category and an index, then this function can be used. It takes in 
@@ -135,8 +256,11 @@ def rename( location=None, categoryName=None, replace=False ):
     
     # Renaming the files one by one.
     for idx, oldFileName in enumerate( listOfFiles ):
+        fileExt = oldFileName.split('.')[-1]    # Keep file extension same.
         oldFilePath = os.path.join( newLocation, oldFileName )
-        newFileName = categoryName + '.' + str( idx + 1 ) + '.jpg'
+        # In some cases we may want the idx of the images to start from 1000 or 50,
+        # etc. In that case we use the startIdx.
+        newFileName = categoryName + '.' + str( idx + 1 + startIdx ) + '.' + fileExt
         newFilePath = os.path.join( newLocation, newFileName )
         shutil.move( oldFilePath, newFilePath )
         print( 'Renamed file {} to {}, [{}/{}]'.format( oldFileName, \
@@ -180,6 +304,27 @@ invert = lambda x: 1-x
 
 #===============================================================================
 
+def paramsFromStat( stat ):
+    '''
+    Function to extract the parameters from the statistics list of a certain epoch.
+    The statistics list will have strings for each epoch. Each of these strings 
+    will be like the following:
+    "epoch, learningRate, trainLoss, trainAcc, validAcc"
+    This string will be parsed for getting the parameters.
+    To get the parameters for the epoch 4, statistics[4] have to be passes into 
+    this function.
+    '''
+    params = stat.split(', ')
+    epoch = int( params[0] )
+    learningRate = float( params[1] )
+    trainLoss = float( params[2] )
+    trainAcc = float( params[3] )
+    validAcc = float( params[4] )
+    
+    return [ epoch, learningRate, trainLoss, trainAcc, validAcc ]
+
+#===============================================================================
+
 def findLatestCkpt( checkpointDirPath=None, training=True ):
     '''
     Finds out the latest checkpoint file in the checkpoint directory and
@@ -206,7 +351,7 @@ def findLatestCkpt( checkpointDirPath=None, training=True ):
     # Create a folder to store the model checkpoints.
     if not os.path.exists( checkpointDirPath ):  # If no previous model is saved.
         os.makedirs( checkpointDirPath )
-        return None, None, -1
+        return None, None, 0
     else:
         # If there is previously saved model, then import the graph 
         # along with all the variables, operations etc. (.meta file).
@@ -279,7 +424,7 @@ def findLatestCkpt( checkpointDirPath=None, training=True ):
 
         # At this stage we do not have any incomplete checkpoints in the
         # checkpointDirPath. So now we find the latest checkpoint.
-        latestCkptIdx, latestCkptPath = -1, None
+        latestCkptIdx, latestCkptPath = 0, None
         for ckptPath in listOfValidCkptPaths:
             currentCkptIdx = ckptPath.split('-')[-1]   # Extract checkpoint index.
             
@@ -297,7 +442,7 @@ def findLatestCkpt( checkpointDirPath=None, training=True ):
         # This will give the latest epoch that has completed successfully.
         # When the checkpoints are saved the epoch is added with +1 in the 
         # filename. So for extracting the epoch the -1 is done.
-        latestEpoch = latestCkptIdx - 1 if latestCkptIdx > -1 else -1
+        latestEpoch = latestCkptIdx if latestCkptIdx > 0 else 0
         
         ##latestCkptPath = tf.train.latest_checkpoint( checkpointDirPath )
         # We do not use the tf.train.latest_checkpoint( checkpointDirPath ) 
@@ -321,7 +466,7 @@ def findLatestCkpt( checkpointDirPath=None, training=True ):
             # If no latest checkpoint is found or all are deleted 
             # because of incompleteness and only the 'checkpoint' file 
             # remains, then None is returned.
-            return None, None, -1
+            return None, None, 0
 
 #===============================================================================
 
@@ -350,6 +495,73 @@ def createMaskFromContour( imgWidth, imgHeight, contour ):
     
 #===============================================================================
 
+def spaceToDepth( arr, blockSize ):
+    '''
+    Rearranges blocks of spatial data, into depth. More specifically, this 
+    operation outputs a copy of the input tensor where values from the height 
+    and width dimensions are moved to the depth dimension. The attribute 
+    block_size indicates the input block size.
+
+    For the following input of shape [1, 4, 4, 1], and a block size of 2:
+    x = [[ [[1],   [2],  [5],  [6]],
+           [[3],   [4],  [7],  [8]],
+           [[9],  [10], [13],  [14]],
+           [[11], [12], [15],  [16]] ]]
+    the operator will return the following tensor of shape [1, 2, 2, 4]:
+    x = [[ [[1, 2, 3, 4],        [5, 6, 7, 8]],
+           [[9, 10, 11, 12], [13, 14, 15, 16]] ]]
+    '''
+    arr = np.array( arr )
+    b, h, w, d = arr.shape
+    
+    # Height and width should be multiple of blockSize.
+    if h % blockSize != 0 or w % blockSize != 0:
+        print( 'height or width not multiple of blockSize. Aborting.' )
+        return
+
+    newH, newW = int( h / blockSize ), int( w / blockSize )
+    arrNew = arr.reshape( b, newH, blockSize, newW, blockSize, -1)
+    arrNew = np.swapaxes( arrNew, 2, 3 )
+    arrNew = arrNew.reshape( b, newH, newW, -1)
+    
+    return arrNew
+    
+#===============================================================================
+
+def depthToSpace( arr, blockSize ):
+    '''
+    Rearranges data from depth into blocks of spatial data. This is the reverse 
+    transformation of SpaceToDepth. More specifically, this op outputs a copy of
+    the input tensor where values from the depth dimension are moved in spatial 
+    blocks to the height and width dimensions. The attr block_size indicates the
+    input block size and how the data is moved.
+    
+    For the following input of shape [1, 2, 2, 4], and a block size of 2:
+    x =  [[ [[1, 2, 3, 4],        [5, 6, 7, 8]],
+            [[9, 10, 11, 12], [13, 14, 15, 16]] ]]
+    the operator will return the following tensor of shape [1 4 4 1]:
+    x = [[ [[1],   [2],  [5],  [6]],
+           [[3],   [4],  [7],  [8]],
+           [[9],  [10], [13],  [14]],
+           [[11], [12], [15],  [16]] ]]
+    '''
+    arr = np.array( arr )
+    b, h, w, d = arr.shape
+    
+    # Height and width should be multiple of blockSize.
+    if d % (blockSize ** 2) != 0:
+        print( 'depth not multiple of blockSize^2. Aborting.' )
+        return
+
+    newH, newW = h * blockSize, w * blockSize
+    arrNew = arr.reshape( b, h, w, blockSize, blockSize, -1 )
+    arrNew = np.swapaxes( arrNew, 2, 3 )
+    arrNew = arrNew.reshape( b, newH, newW, -1)
+
+    return arrNew
+    
+#===============================================================================
+
 if __name__ == '__main__':
 
     trainDir = './train'
@@ -360,78 +572,197 @@ if __name__ == '__main__':
     trainImgList = os.listdir( trainDir )
     testImgList = os.listdir( testDir )
 
+##-------------------------------------------------------------------------------
+
+    #trainDogImgList = [ i for i in trainImgList if i.split('.')[0] == 'dog' ]
+    #trainCatImgList = [ i for i in trainImgList if i.split('.')[0] == 'cat' ]
+
+    ##os.makedirs( validDir )
+    ##for i in range( 10000, len( trainDogImgList ) ):
+        ##filename = 'dog.' + str(i) + '.jpg'
+        ##shutil.move( os.path.join( trainDir, filename ), os.path.join( validDir, filename ) )
+        ##filename = 'cat.' + str(i) + '.jpg'
+        ##shutil.move( os.path.join( trainDir, filename ), os.path.join( validDir, filename ) )
+        
+    #validImgList = os.listdir( validDir )
+    
+    #validDogImgList = [ i for i in validImgList if i.split('.')[0] == 'dog' ]
+    #validCatImgList = [ i for i in validImgList if i.split('.')[0] == 'cat' ]
+
+    #maxHeight, maxWidth, minHeight, minWidth = 0, 0, 10000, 10000
+    #avgHeight, avgWidth = 0, 0
+    #totalImgs = len( trainImgList ) + len( testImgList ) + len( validImgList )
+    
+    #for i in trainImgList:
+        #filepath = os.path.join( trainDir, i )
+        #img = cv2.imread( filepath )
+        #h, w = img.shape[0], img.shape[1]
+        #maxHeight = h if h > maxHeight else maxHeight
+        #maxWidth = w if w > maxWidth else maxWidth
+        #minHeight = h if h < minHeight else minHeight
+        #minWidth = w if w < minWidth else minWidth
+        #avgHeight += (h / totalImgs)
+        #avgWidth += (w / totalImgs)
+        #print(i)
+
+    #for i in testImgList:
+        #filepath = os.path.join( testDir, i )
+        #img = cv2.imread( filepath )
+        #h, w = img.shape[0], img.shape[1]
+        #maxHeight = h if h > maxHeight else maxHeight
+        #maxWidth = w if w > maxWidth else maxWidth
+        #minHeight = h if h < minHeight else minHeight
+        #minWidth = w if w < minWidth else minWidth
+        #avgHeight += (h / totalImgs)
+        #avgWidth += (w / totalImgs)
+        #print(i)
+        
+    #for i in validImgList:
+        #filepath = os.path.join( validDir, i )
+        #img = cv2.imread( filepath )
+        #h, w = img.shape[0], img.shape[1]
+        #maxHeight = h if h > maxHeight else maxHeight
+        #maxWidth = w if w > maxWidth else maxWidth
+        #minHeight = h if h < minHeight else minHeight
+        #minWidth = w if w < minWidth else minWidth
+        #avgHeight += (h / totalImgs)
+        #avgWidth += (w / totalImgs)
+        #print(i)
+
+    #print( 'Total train images: ', len(trainImgList) )
+    #print( 'Total \'dog\' images in training set: ', len(trainDogImgList) )
+    #print( 'Total \'cat\' images in training set: ', len(trainCatImgList) )
+    #print('')
+    #print( 'Total validation images: ', len(validImgList) )
+    #print( 'Total \'dog\' images in validation set: ', len(validDogImgList) )
+    #print( 'Total \'cat\' images in validation set: ', len(validCatImgList) )
+    #print( 'Filename format for training and validation images: {}, {}\n[ Printing the 0th image '\
+           #'filename of dog and cat ]'.format( trainDogImgList[0], trainCatImgList[0] ) )
+    #print('')
+    #print( 'Total test images:', len(testImgList) )
+    #print( 'Filename format for test images: {}\n[ Printing the 0th image '\
+           #'filename ]'.format( testImgList[0] ) )
+    #print( 'maxHeight: {}, minHeight: {}, maxWidth: {}, minWidth: {}'.format( \
+                                #maxHeight, minHeight, maxWidth, minWidth ) )
+    #print( 'avgHeight: {}, avgWidth: {}'.format( avgHeight, avgWidth ) )
+
+##-------------------------------------------------------------------------------
+
+    #key = ord('`')
+    #i = 0
+    #while key & 0xFF != 27:
+        #filePath = os.path.join( trainDir, trainImgList[i] )
+        #img = cv2.imread( filePath )
+        #outImg = img / 255.0
+        #outImg = randomBrightness( outImg )
+        #outImg = randomContrast( outImg )
+        #outImg = randomFlipHori( outImg )
+        #outImg = randomFlipVert( outImg )
+        #cv2.imshow( 'Input', img )
+        #cv2.imshow( 'Output', outImg )
+        #key = cv2.waitKey( 0 )
+        #if key == 81: i -= 1    # Previous image.
+        #if key == 83: i += 1    # Next image.
+        
+##-------------------------------------------------------------------------------
+    
+    #rename( './test/dog', 'dog', replace=True )
+    
+#-------------------------------------------------------------------------------
+    
+    #createTfRecord( fileNameOfTfRec='./dummy_images/trial/trial.tfrecord', dataLocation='./dummy_images/trial/images', \
+                        #shuffle=True )
+    #createTfRecord( fileNameOfTfRec='./train.tfrecord', dataLocation=trainDir, \
+                        #shuffle=True )
+    #createTfRecord( fileNameOfTfRec='./valid.tfrecord', dataLocation=validDir, \
+                        #shuffle=True )
+    #createTfRecord( fileNameOfTfRec='./test.tfrecord', dataLocation=testDir, \
+                        #shuffle=True )
+
+#-------------------------------------------------------------------------------
+    
+    #x = [[[[0,1],   [2,3],   [4,5],   [6,7],   [8,9],   [10,11]],
+          #[[12,13], [14,15], [16,17], [18,19], [20,21], [22,23]],
+          #[[24,25], [26,27], [28,29], [30,31], [32,33], [34,35]],
+          #[[36,37], [38,39], [40,41], [42,43], [44,45], [46,47]],
+          #[[48,49], [50,51], [52,53], [54,55], [56,57], [58,59]],
+          #[[60,61], [62,63], [64,65], [66,67], [68,69], [70,71]]]]
+
+    #y = spaceToDepth(x, 2)
+    #print(y, y.shape)
+    
+    #x = [[[[ 0,  1,  2,  3, 12, 13, 14, 15],
+           #[ 4,  5,  6,  7, 16, 17, 18, 19],
+           #[ 8,  9, 10, 11, 20, 21, 22, 23]],
+          #[[24, 25, 26, 27, 36, 37, 38, 39],
+           #[28, 29, 30, 31, 40, 41, 42, 43],
+           #[32, 33, 34, 35, 44, 45, 46, 47]],
+          #[[48, 49, 50, 51, 60, 61, 62, 63],
+           #[52, 53, 54, 55, 64, 65, 66, 67],
+           #[56, 57, 58, 59, 68, 69, 70, 71]]]]
+   
+    #y = depthToSpace(x, 2)
+    #print(y, y.shape)
+    
+    #x = np.array( [[[[0,1],   [2,3],   [4,5],   [6,7],   [8,9],   [10,11]],
+                    #[[12,13], [14,15], [16,17], [18,19], [20,21], [22,23]],
+                    #[[24,25], [26,27], [28,29], [30,31], [32,33], [34,35]],
+                    #[[36,37], [38,39], [40,41], [42,43], [44,45], [46,47]],
+                    #[[48,49], [50,51], [52,53], [54,55], [56,57], [58,59]],
+                    #[[60,61], [62,63], [64,65], [66,67], [68,69], [70,71]]]] )
+    #print(x, x.shape)
+
+    #x = [[[[1],   [2],  [5],  [6]],
+          #[[3],   [4],  [7],  [8]],
+          #[[9],  [10], [13],  [14]],
+          #[[11], [12], [15],  [16]]]]
+    
+    #y = spaceToDepth(x, 2)
+    #print(y, y.shape)
+    
+    #x = [[[[ 1,  2,  3,  4],
+           #[ 5,  6,  7,  8]],
+          #[[ 9, 10, 11, 12],
+           #[13, 14, 15, 16]]]]
+    
+    #y = depthToSpace(x, 2)
+    #print(y, y.shape)
+
+    #x = np.array( [[[[1],   [2],  [5],  [6]],
+                    #[[3],   [4],  [7],  [8]],
+                    #[[9],  [10], [13],  [14]],
+                    #[[11], [12], [15],  [16]]]] )
+    #print( x, x.shape )
+
 #-------------------------------------------------------------------------------
 
-    trainDogImgList = [ i for i in trainImgList if i.split('.')[0] == 'dog' ]
-    trainCatImgList = [ i for i in trainImgList if i.split('.')[0] == 'cat' ]
-
-    if not os.path.exists( validDir ):
-        os.makedirs( validDir )
-        for i in range( 10000, len( trainDogImgList ) ):
-            filename = 'dog.' + str(i) + '.jpg'
-            shutil.move( os.path.join( trainDir, filename ), os.path.join( validDir, filename ) )
-            filename = 'cat.' + str(i) + '.jpg'
-            shutil.move( os.path.join( trainDir, filename ), os.path.join( validDir, filename ) )
+    #imgLocation = './imagenet_dog_images'
+    #labelLocation = './imagenet_dog_labels'
+    #listOfImgs = os.listdir( imgLocation )
+    #listOfLabels = os.listdir( labelLocation )
+    #newImgLocation = './imagenet_dog_images_renamed'
+    #newLabelLocation = './imagenet_dog_labels_renamed'
+    #os.makedirs( newImgLocation )
+    #os.makedirs( newLabelLocation )
+    #imgExt = listOfImgs[0].split('.')[-1]
+    #for idx, i in enumerate( listOfLabels ):
+        #nameOfPairedImg = '.'.join( i.split('.')[:-1] ) + '.' + imgExt
+        #imgIdx = listOfImgs.index( nameOfPairedImg )
+        #img = listOfImgs[ imgIdx ]
+        #src = os.path.join( imgLocation, img )
+        #dst = os.path.join( newImgLocation, img )
+        #shutil.copy( src, dst )
+        #os.remove( src )
+        #src = os.path.join( labelLocation, i )
+        #dst = os.path.join( newLabelLocation, i )
+        #shutil.copy( src, dst )
+        #os.remove( src )
+        #print( idx + 1 )
         
-    validImgList = os.listdir( validDir )
+#-------------------------------------------------------------------------------
     
-    validDogImgList = [ i for i in validImgList if i.split('.')[0] == 'dog' ]
-    validCatImgList = [ i for i in validImgList if i.split('.')[0] == 'cat' ]
+    #rename( location='./imagenet_dog_labels_renamed', categoryName='dog' )
+    #rename( location='./imagenet_dog_images', categoryName='dog', startIdx=609 )
 
-    maxHeight, maxWidth, minHeight, minWidth = 0, 0, 10000, 10000
-    avgHeight, avgWidth = 0, 0
-    totalImgs = len( trainImgList ) + len( testImgList ) + len( validImgList )
-    
-    for i in trainImgList:
-        filepath = os.path.join( trainDir, i )
-        img = cv2.imread( filepath )
-        h, w = img.shape[0], img.shape[1]
-        maxHeight = h if h > maxHeight else maxHeight
-        maxWidth = w if w > maxWidth else maxWidth
-        minHeight = h if h < minHeight else minHeight
-        minWidth = w if w < minWidth else minWidth
-        avgHeight += (h / totalImgs)
-        avgWidth += (w / totalImgs)
-        print(i)
 
-    for i in testImgList:
-        filepath = os.path.join( testDir, i )
-        img = cv2.imread( filepath )
-        h, w = img.shape[0], img.shape[1]
-        maxHeight = h if h > maxHeight else maxHeight
-        maxWidth = w if w > maxWidth else maxWidth
-        minHeight = h if h < minHeight else minHeight
-        minWidth = w if w < minWidth else minWidth
-        avgHeight += (h / totalImgs)
-        avgWidth += (w / totalImgs)
-        print(i)
-        
-    for i in validImgList:
-        filepath = os.path.join( validDir, i )
-        img = cv2.imread( filepath )
-        h, w = img.shape[0], img.shape[1]
-        maxHeight = h if h > maxHeight else maxHeight
-        maxWidth = w if w > maxWidth else maxWidth
-        minHeight = h if h < minHeight else minHeight
-        minWidth = w if w < minWidth else minWidth
-        avgHeight += (h / totalImgs)
-        avgWidth += (w / totalImgs)
-        print(i)
-
-    print( 'Total train images: ', len(trainImgList) )
-    print( 'Total \'dog\' images in training set: ', len(trainDogImgList) )
-    print( 'Total \'cat\' images in training set: ', len(trainCatImgList) )
-    print('')
-    print( 'Total validation images: ', len(validImgList) )
-    print( 'Total \'dog\' images in validation set: ', len(validDogImgList) )
-    print( 'Total \'cat\' images in validation set: ', len(validCatImgList) )
-    print( 'Filename format for training and validation images: {}, {}\n[ Printing the 0th image '\
-           'filename of dog and cat ]'.format( trainDogImgList[0], trainCatImgList[0] ) )
-    print('')
-    print( 'Total test images:', len(testImgList) )
-    print( 'Filename format for test images: {}\n[ Printing the 0th image '\
-           'filename ]'.format( testImgList[0] ) )
-    print( 'maxHeight: {}, minHeight: {}, maxWidth: {}, minWidth: {}'.format( \
-                                maxHeight, minHeight, maxWidth, minWidth ) )
-    print( 'avgHeight: {}, avgWidth: {}'.format( avgHeight, avgWidth ) )
-
+    pass

@@ -11,9 +11,9 @@ nClasses = len( classNames )    # Number of classes.
 # Dictionary that refers to class index with key as class names.
 className2labelIdx = { i: idx for idx, i in enumerate( classNames ) }
 
-learningRate = 0.0001
+learningRate = 0.00003
 batchSize = 100
-nEpochs = 38
+nEpochs = 150
 
 # The size estimate of the whole set of images is:
 # maxHeight: 768, minHeight: 32, maxWidth: 1050, minWidth: 37
@@ -31,7 +31,7 @@ logDirPath = './logs'       # Directory to save training logs.
 ckptDirPath = './temp'      # Directory to save ckeckpoints.
 savedCkptName = 'classifier'    # Name of saved checkpoints.
 nSavedCkpt = 5      # Number of saved checkpoints.
-printInterval = 1   # Intervals of printing training status on console.
+printInterval = 20   # Intervals of printing training status on console.
 
 modelSaveInterval = 1       # Interval at which model parameters are saved.
 

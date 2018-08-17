@@ -46,7 +46,7 @@ class CDclassifier( object ):
         layerIdx = '1'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=32, padding='SAME', \
-                use_bias=True, activation=None, name=layerName, \
+                use_bias=False, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -69,7 +69,7 @@ class CDclassifier( object ):
         layerIdx = '2'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=64, padding='SAME', \
-                use_bias=True, activation=None, name=layerName, \
+                use_bias=False, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -92,7 +92,7 @@ class CDclassifier( object ):
         layerIdx = '3'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=128, padding='SAME', \
-                use_bias=True, activation=None, name=layerName, \
+                use_bias=False, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -115,7 +115,7 @@ class CDclassifier( object ):
         layerIdx = '4'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=256, padding='SAME', \
-                use_bias=True, activation=None, name=layerName, \
+                use_bias=False, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -138,7 +138,7 @@ class CDclassifier( object ):
         layerIdx = '5'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=512, padding='SAME', \
-                use_bias=True, activation=None, name=layerName, \
+                use_bias=False, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -161,7 +161,7 @@ class CDclassifier( object ):
         layerIdx = '6'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(1,1), filters=256, padding='SAME', \
-                use_bias=True, activation=None, name=layerName, \
+                use_bias=False, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -184,7 +184,7 @@ class CDclassifier( object ):
         layerIdx = '7'
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=512, padding='SAME', \
-                use_bias=True, activation=None, name=layerName, \
+                use_bias=False, activation=None, name=layerName, \
                 kernel_initializer=self.initW, bias_initializer=self.initB )
         self.layerOut[ layerName ] = x
         
@@ -196,16 +196,15 @@ class CDclassifier( object ):
         x = tf.layers.batch_normalization( x, training=self.isTraining, name=layerName )
         self.layerOut[ layerName ] = x
         
-        # This next layer will behave as the global max pooling layer. So 
+        # This next layer will behave as the global average pooling layer. So 
         # the padding has to be 'VALID' here to give a 1x1 output size. 
         layerName = 'pooling' + layerIdx
         x = tf.layers.max_pooling2d( x, pool_size=(14,14), strides=1, \
                                         padding='VALID', name=layerName )
         
         x = tf.layers.flatten(x)    # This will keep the 0th dimension 
-        # (batch size dimension) the same and flatten the rest of the elements.
-        # So if the input was 1 x 1 x 64, then it is converted into a single 
-        # dimension (of size 64).
+        # (batch size dimension) the same and flatten the rest of the elements 
+        # (which has shape 1x1x64 right now) into a single dimension (of size 64).
         
         self.layerOut[ layerName ] = x
 
@@ -254,20 +253,20 @@ class CDclassifier( object ):
         lossTensor = tf.nn.softmax_cross_entropy_with_logits_v2( logits=logits, \
                                         labels=self.oneHotLabels )
         
-        # Return the total loss over this batch.
-        return tf.reduce_sum( lossTensor )
+        # Return the average loss over this batch.
+        #return tf.reduce_sum( lossTensor )
+        return tf.reduce_mean( lossTensor )
     
 #==============================================================================
 
-    def train( self, trainDir=None, trainLabelDir=None, \
-                     validDir=None, validLabelDir=None ):
+    def train( self, trainDir=None, validDir=None ):
         '''
         Trains the model.
         '''
         if trainDir == None or validDir == None:
             print( '\ntrainDir or validDir not provided. Aborting...' )
             return
-        
+                
         # SET INPUTS AND LABELS.
         # Batch size will be set during runtime as the last batch may not be of
         # the same size of the other batches.
@@ -318,9 +317,14 @@ class CDclassifier( object ):
         logFileName = 'training_log{}.txt'.format( timeStamp() )
         logFilePath = os.path.join( logDirPath, logFileName )
         
-        # CREATE LISTS TO HOLD ACCURACY AND LOSS VALUES.
-        listOfTrainLoss, listOfTrainAcc, listOfValidAcc = [], [], [] 
-        
+        # CREATE A LISTS TO HOLD ACCURACY AND LOSS VALUES.
+        # This list will have strings for each epoch. Each of these strings 
+        # will be like the following:
+        # "epoch, learningRate, trainLoss, trainAcc, validAcc"
+        statistics = []
+        # Format of the statistics values.
+        statisticsFormat = 'epoch, learningRate, trainLoss, trainAcc, validAcc'
+                        
 #-------------------------------------------------------------------------------
         
         # START SESSION.
@@ -329,7 +333,7 @@ class CDclassifier( object ):
                 'Batch Size: {}'.format( self.optimizerName, learningRate, batchSize ) )
             
             self.isTraining = True    # Enabling the training flag. 
-
+            
             # Define model saver.
             # Finding latest checkpoint and the latest completed epoch.
             metaFilePath, ckptPath, latestEpoch = findLatestCkpt( ckptDirPath, \
@@ -399,12 +403,11 @@ class CDclassifier( object ):
                        trainingLogs.write( status )
                     print( status )
                     
-                # Reloading accuracy and loss list, mean and std from checkpoint.
-                listOfTrainLoss = info[ 'listOfTrainLoss' ]
-                listOfTrainAcc = info[ 'listOfTrainAcc' ]
-                listOfValidAcc = info[ 'listOfValidAcc' ]
+                # Reloading accuracy and loss statistics, mean and std from checkpoint.
+                statistics = info[ 'statistics' ]
                 mean = np.array( info[ 'mean' ] )
                 std = np.array( info[ 'std' ] )
+                maxValidAcc = info[ 'maxValidAcc' ]
 
             else:
                 # When there are no valid checkpoints initialize the saver to 
@@ -415,19 +418,22 @@ class CDclassifier( object ):
                
                 # Calculate mean and std.
                 mean, std = datasetMeanStd( trainDir )
+                maxValidAcc = 0
 
 #-------------------------------------------------------------------------------
                     
             print( '\nStarted Training...' )
             
-            for epoch in range( startEpoch, nEpochs ):
+            for epoch in range( startEpoch, nEpochs+1 ):
+                # epoch will be numbered from 1 to 159 if there are 150 epochs.
+                # Is is not numbered from 0 to 149.
+
+                self.isTraining = True    # Enabling training flag at the start of 
+                # the training phase of each epoch as it will be disabled in the 
+                # corresponding validaton phase. 
 
                 epochProcessTime = time.time()
                 
-                self.isTraining = True    # Enabling the training flag at the start 
-                # of the training phase of each epoch, as it will be disabled in the
-                # corresponding validation phase.
-
                 # TRAINING PHASE.
                 # This list contains the filepaths for all the images in trainDir.
                 listOfRemainingTrainImg = [ os.path.join( trainDir, i ) for i \
@@ -438,9 +444,13 @@ class CDclassifier( object ):
                 
                 trainBatchIdx = 0    # Counts the number of batches processed.
                 
+                # Storing information of current epoch for recording later in statistics.
+                # This is recorded as a string for better visibility in the json file.
+                currentStatistics = '{}, {}, '.format( epoch, learningRate )
+                
                 # Scan entire training dataset.
                 while len( listOfRemainingTrainImg ) > 0:
-                    
+
                     trainBatchProcessTime = time.time()
 
                     # Creating batches. Also listOfRemainingTrainImg is updated.
@@ -483,7 +493,7 @@ class CDclassifier( object ):
 
                     # Printing and logging current status of training.
                     status1 = '\nEpoch: {}/{},\tBatch: {}/{},\tBatch loss: ' \
-                        '{:0.6f},\tBatch time: {:0.3f} sec '.format( epoch+1, \
+                        '{:0.6f},\tBatch time: {:0.3f} sec '.format( epoch, \
                         nEpochs, trainBatchIdx, nTrainBatches, trainBatchLoss, \
                         trainBatchProcessTime )
                     
@@ -495,9 +505,8 @@ class CDclassifier( object ):
                     if trainBatchIdx % printInterval == 0:
                         print( status1, end='' )
                 
-                # Noting the loss and accuracy after the end of all batches.
-                listOfTrainLoss.append( trainLoss )
-                listOfTrainAcc.append( trainAcc )
+                # Recording training loss and accuracy in current statistics string.
+                currentStatistics += '{}, {}, '.format( trainLoss, trainAcc )
                 
 #-------------------------------------------------------------------------------
                 
@@ -511,13 +520,13 @@ class CDclassifier( object ):
                 self.isTraining = False    # Disabling the training flag.
                 validBatchIdx = 0    # Counts the number of batches processed.
 
-                status1 = '\n\nValidation phase for epoch {}.'.format( epoch+1 )
+                status1 = '\n\nValidation phase for epoch {}.'.format( epoch )
                 
                 # Update training log.
                 with open( logFilePath, 'a', buffering=1 ) as trainingLogs:
                                  trainingLogs.write( status1+'\n' )
             
-                print( '\nValidation phase for epoch {}.'.format( epoch+1 ) )
+                print( '\nValidation phase for epoch {}.'.format( epoch ) )
                 
                 # Scan entire validation dataset.
                 while len( listOfRemainingValidImg ) > 0:
@@ -539,7 +548,7 @@ class CDclassifier( object ):
                     feedDict = { x: validImgBatch, y: validLabelBatch }
                     validLayerOut = sess.run( self.layerOut, feed_dict=feedDict )
                     validPredLogits = sess.run( predLogits, feed_dict=feedDict )
-                    
+                                        
                     # The validPredLogits is an array of logits. It needs to be 
                     # converted to sigmoid to get probability and then we need
                     # to extract the max index to get the labels.
@@ -556,7 +565,7 @@ class CDclassifier( object ):
 
                     # Printing and logging current status of validation.
                     status1 = '\nEpoch: {}/{},\tBatch: {}/{},\tBatch time: ' \
-                        '{:0.3f} sec '.format( epoch+1, nEpochs, validBatchIdx, \
+                        '{:0.3f} sec '.format( epoch, nEpochs, validBatchIdx, \
                         nValidBatches, validBatchProcessTime )
                     
                     # Update training log.
@@ -566,10 +575,12 @@ class CDclassifier( object ):
                     # print the status on the terminal every 10 batches.
                     if validBatchIdx % printInterval == 0:     
                         print( status1, end='' )
+                        
+                # Recording validation accuracy in current statistics string.
+                currentStatistics += '{}'.format( validAcc )
                 
-                
-                # Noting the loss and accuracy after the end of all batches.
-                listOfValidAcc.append( validAcc )
+                # Noting accuracy after the end of all batches.
+                statistics.append( currentStatistics )
                 
 #-------------------------------------------------------------------------------
                 
@@ -579,7 +590,7 @@ class CDclassifier( object ):
                 # Printing and logging current epoch.
                 status3 = '\nEpoch {} done. Epoch time: {:0.3f} sec, Train ' \
                     'loss: {:0.6f}, Train Accuracy: {:0.3f} %, Valid Accuracy: {:0.3f} %' \
-                    .format( epoch+1, epochProcessTime, trainLoss, trainAcc, validAcc )
+                    .format( epoch, epochProcessTime, trainLoss, trainAcc, validAcc )
                 
                 # Update training log.
                 with open( logFilePath, 'a', buffering=1 ) as trainingLogs:
@@ -587,25 +598,27 @@ class CDclassifier( object ):
                     
                 print( '\n' + status3 )
 
-                # Saving the variables at some intervals.
-                if (epoch + 1) % modelSaveInterval == 0:
+                # Saving the variables at some intervals, only if there is 
+                # improvement in validation accuracy.
+                if epoch % modelSaveInterval == 0 and validAcc > maxValidAcc:
                     ckptSavePath = os.path.join( ckptDirPath, savedCkptName )
-                    saver.save( sess, save_path=ckptSavePath, global_step=(epoch+1) )
+                    saver.save( sess, save_path=ckptSavePath, global_step=epoch )
+                    
+                    maxValidAcc = validAcc      # Updating the maxValidAcc.
                     
                     # Saving the important info like learning rate, batch size,
                     # and training error for the current epoch in a json file.
                     # Converting the mean and std into lists before storing as
-                    # json cannot store numpy arrays.
-                    jsonInfoFilePath = ckptSavePath + '-' + str(epoch + 1) + '.json'
+                    # json cannot store numpy arrays. And also saving the training
+                    # and validation loss and accuracy statistics.
+                    jsonInfoFilePath = ckptSavePath + '-' + str( epoch ) + '.json'
                     with open( jsonInfoFilePath, 'w' ) as infoFile:
-                        infoDict = { 'epoch': epoch+1, 'batchSize': batchSize, \
+                        infoDict = { 'epoch': epoch, 'batchSize': batchSize, \
                                      'learningRate': learningRate, \
-                                     'mean': list( mean ), \
-                                     'std': list( std ), 'trainLoss': trainLoss, \
-                                     'trainAcc': trainAcc, 'validAcc': validAcc, \
-                                     'listOfTrainLoss': listOfTrainLoss, \
-                                     'listOfTrainAcc': listOfTrainAcc, \
-                                     'listOfValidAcc': listOfValidAcc }
+                                     'mean': list( mean ), 'std': list( std ), \
+                                     'maxValidAcc': maxValidAcc, \
+                                     'statisticsFormat': statisticsFormat, \
+                                     'statistics': statistics }
                         
                         json.dump( infoDict, infoFile, sort_keys=False, \
                                    indent=4, separators=(',', ': ') )
@@ -618,14 +631,17 @@ class CDclassifier( object ):
 
                     print( status2 )
                     #print( status2, file=trainingLogs )
-
+                
+                # Updating the maxValidAcc value.
+                elif validAcc > maxValidAcc:      maxValidAcc = validAcc
+                
         
         self.isTraining = False   # Indicates the end of training.
         print( '\nTraining completed with {} epochs.'.format( nEpochs ) )
 
 #===============================================================================
 
-    def test( self, testDir=None, testLabelDir=None ):
+    def test( self, testDir=None ):
         '''
         Tests the model.
         '''
@@ -885,7 +901,7 @@ class CDclassifier( object ):
         inferPredLabel = np.argmax( inferPredProb )
         
         return inferLayerOut, inferPredLabel, inferPredLogits, inferPredProb, \
-                                                    mean, std
+                                                mean, std
     
 #===============================================================================
 
@@ -897,15 +913,9 @@ if __name__ == '__main__':
     validDir = './valid'
     testDir = './test'
     trialDir = './trial'
-
-    trainLabelDir = './train_labels'
-    validLabelDir = './valid_labels'
-    testLabelDir = './test_labels'
-    trialLabelDir = './trial_labels'
     
-    classifier.train( trainDir=trainDir, trainLabelDir=trainLabelDir , \
-                       validDir=validDir, validLabelDir=validLabelDir )
-    #classifier.test( testDir=testDir, testLabelDir=testLabelDir )
+    #classifier.train( trainDir=trainDir, validDir=validDir )
+    classifier.test( testDir=testDir )
 
     pass
 

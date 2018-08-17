@@ -12,7 +12,7 @@ if __name__ == '__main__':
     
     trainDir = './train'
     validDir = './valid'
-    testDir = './test_unlabelled'
+    testDir = './test'
     trialDir = './trial'
     
 #-------------------------------------------------------------------------------
