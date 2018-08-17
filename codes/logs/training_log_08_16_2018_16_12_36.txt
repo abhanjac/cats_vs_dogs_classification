@@ -1,0 +1,306 @@
+
+Current parameters:
+learningRate: 7e-06, batchSize: 100
+Previous parameters (inside checkpoint ./temp/classifier-15):
+learningRate:3e-05, batchSize: 100
+They are different.
+So reloaded only MODEL variables from checkpoint: ./temp/classifier-15
+And initialized other variables.
+Epoch: 16/150,	Batch: 1/208,	Batch loss: 0.000468,	Batch time: 6.366 sec 
+Epoch: 16/150,	Batch: 2/208,	Batch loss: 0.000498,	Batch time: 4.827 sec 
+Epoch: 16/150,	Batch: 3/208,	Batch loss: 0.000449,	Batch time: 1.284 sec 
+Epoch: 16/150,	Batch: 4/208,	Batch loss: 0.000739,	Batch time: 1.281 sec 
+Epoch: 16/150,	Batch: 5/208,	Batch loss: 0.000257,	Batch time: 1.265 sec 
+Epoch: 16/150,	Batch: 6/208,	Batch loss: 0.000306,	Batch time: 1.280 sec 
+Epoch: 16/150,	Batch: 7/208,	Batch loss: 0.000516,	Batch time: 1.264 sec 
+Epoch: 16/150,	Batch: 8/208,	Batch loss: 0.000711,	Batch time: 1.273 sec 
+Epoch: 16/150,	Batch: 9/208,	Batch loss: 0.000160,	Batch time: 1.267 sec 
+Epoch: 16/150,	Batch: 10/208,	Batch loss: 0.000682,	Batch time: 1.344 sec 
+Epoch: 16/150,	Batch: 11/208,	Batch loss: 0.000680,	Batch time: 1.301 sec 
+Epoch: 16/150,	Batch: 12/208,	Batch loss: 0.000304,	Batch time: 1.311 sec 
+Epoch: 16/150,	Batch: 13/208,	Batch loss: 0.000181,	Batch time: 1.257 sec 
+Epoch: 16/150,	Batch: 14/208,	Batch loss: 0.000291,	Batch time: 1.284 sec 
+Epoch: 16/150,	Batch: 15/208,	Batch loss: 0.000315,	Batch time: 1.273 sec 
+Epoch: 16/150,	Batch: 16/208,	Batch loss: 0.000107,	Batch time: 1.299 sec 
+Epoch: 16/150,	Batch: 17/208,	Batch loss: 0.000179,	Batch time: 1.258 sec 
+Epoch: 16/150,	Batch: 18/208,	Batch loss: 0.000638,	Batch time: 1.256 sec 
+Epoch: 16/150,	Batch: 19/208,	Batch loss: 0.000449,	Batch time: 1.304 sec 
+Epoch: 16/150,	Batch: 20/208,	Batch loss: 0.000280,	Batch time: 1.293 sec 
+Epoch: 16/150,	Batch: 21/208,	Batch loss: 0.000310,	Batch time: 1.290 sec 
+Epoch: 16/150,	Batch: 22/208,	Batch loss: 0.000227,	Batch time: 1.276 sec 
+Epoch: 16/150,	Batch: 23/208,	Batch loss: 0.000163,	Batch time: 1.270 sec 
+Epoch: 16/150,	Batch: 24/208,	Batch loss: 0.000178,	Batch time: 1.287 sec 
+Epoch: 16/150,	Batch: 25/208,	Batch loss: 0.000847,	Batch time: 1.261 sec 
+Epoch: 16/150,	Batch: 26/208,	Batch loss: 0.001087,	Batch time: 1.257 sec 
+Epoch: 16/150,	Batch: 27/208,	Batch loss: 0.000187,	Batch time: 1.267 sec 
+Epoch: 16/150,	Batch: 28/208,	Batch loss: 0.000683,	Batch time: 1.256 sec 
+Epoch: 16/150,	Batch: 29/208,	Batch loss: 0.001033,	Batch time: 1.251 sec 
+Epoch: 16/150,	Batch: 30/208,	Batch loss: 0.000469,	Batch time: 1.258 sec 
+Epoch: 16/150,	Batch: 31/208,	Batch loss: 0.000651,	Batch time: 1.273 sec 
+Epoch: 16/150,	Batch: 32/208,	Batch loss: 0.000661,	Batch time: 1.260 sec 
+Epoch: 16/150,	Batch: 33/208,	Batch loss: 0.000358,	Batch time: 1.277 sec 
+Epoch: 16/150,	Batch: 34/208,	Batch loss: 0.000554,	Batch time: 1.256 sec 
+Epoch: 16/150,	Batch: 35/208,	Batch loss: 0.000688,	Batch time: 1.274 sec 
+Epoch: 16/150,	Batch: 36/208,	Batch loss: 0.000180,	Batch time: 1.178 sec 
+Epoch: 16/150,	Batch: 37/208,	Batch loss: 0.001054,	Batch time: 1.219 sec 
+Epoch: 16/150,	Batch: 38/208,	Batch loss: 0.000593,	Batch time: 1.213 sec 
+Epoch: 16/150,	Batch: 39/208,	Batch loss: 0.000372,	Batch time: 1.086 sec 
+Epoch: 16/150,	Batch: 40/208,	Batch loss: 0.000256,	Batch time: 1.100 sec 
+Epoch: 16/150,	Batch: 41/208,	Batch loss: 0.000296,	Batch time: 1.115 sec 
+Epoch: 16/150,	Batch: 42/208,	Batch loss: 0.000263,	Batch time: 1.199 sec 
+Epoch: 16/150,	Batch: 43/208,	Batch loss: 0.000760,	Batch time: 1.299 sec 
+Epoch: 16/150,	Batch: 44/208,	Batch loss: 0.000764,	Batch time: 1.219 sec 
+Epoch: 16/150,	Batch: 45/208,	Batch loss: 0.000440,	Batch time: 1.170 sec 
+Epoch: 16/150,	Batch: 46/208,	Batch loss: 0.000541,	Batch time: 1.185 sec 
+Epoch: 16/150,	Batch: 47/208,	Batch loss: 0.000333,	Batch time: 1.282 sec 
+Epoch: 16/150,	Batch: 48/208,	Batch loss: 0.000275,	Batch time: 1.285 sec 
+Epoch: 16/150,	Batch: 49/208,	Batch loss: 0.000226,	Batch time: 1.291 sec 
+Epoch: 16/150,	Batch: 50/208,	Batch loss: 0.001009,	Batch time: 1.232 sec 
+Epoch: 16/150,	Batch: 51/208,	Batch loss: 0.000296,	Batch time: 1.302 sec 
+Epoch: 16/150,	Batch: 52/208,	Batch loss: 0.000058,	Batch time: 1.220 sec 
+Epoch: 16/150,	Batch: 53/208,	Batch loss: 0.000311,	Batch time: 1.261 sec 
+Epoch: 16/150,	Batch: 54/208,	Batch loss: 0.000606,	Batch time: 1.249 sec 
+Epoch: 16/150,	Batch: 55/208,	Batch loss: 0.000419,	Batch time: 1.248 sec 
+Epoch: 16/150,	Batch: 56/208,	Batch loss: 0.000682,	Batch time: 1.270 sec 
+Epoch: 16/150,	Batch: 57/208,	Batch loss: 0.000338,	Batch time: 1.255 sec 
+Epoch: 16/150,	Batch: 58/208,	Batch loss: 0.000440,	Batch time: 1.262 sec 
+Epoch: 16/150,	Batch: 59/208,	Batch loss: 0.000295,	Batch time: 1.274 sec 
+Epoch: 16/150,	Batch: 60/208,	Batch loss: 0.000628,	Batch time: 1.262 sec 
+Epoch: 16/150,	Batch: 61/208,	Batch loss: 0.000412,	Batch time: 1.255 sec 
+Epoch: 16/150,	Batch: 62/208,	Batch loss: 0.000723,	Batch time: 1.270 sec 
+Epoch: 16/150,	Batch: 63/208,	Batch loss: 0.000120,	Batch time: 1.255 sec 
+Epoch: 16/150,	Batch: 64/208,	Batch loss: 0.000388,	Batch time: 1.254 sec 
+Epoch: 16/150,	Batch: 65/208,	Batch loss: 0.000076,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 66/208,	Batch loss: 0.001402,	Batch time: 1.219 sec 
+Epoch: 16/150,	Batch: 67/208,	Batch loss: 0.000956,	Batch time: 1.292 sec 
+Epoch: 16/150,	Batch: 68/208,	Batch loss: 0.000648,	Batch time: 1.270 sec 
+Epoch: 16/150,	Batch: 69/208,	Batch loss: 0.000442,	Batch time: 1.262 sec 
+Epoch: 16/150,	Batch: 70/208,	Batch loss: 0.000517,	Batch time: 1.264 sec 
+Epoch: 16/150,	Batch: 71/208,	Batch loss: 0.000395,	Batch time: 1.255 sec 
+Epoch: 16/150,	Batch: 72/208,	Batch loss: 0.000310,	Batch time: 1.302 sec 
+Epoch: 16/150,	Batch: 73/208,	Batch loss: 0.000449,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 74/208,	Batch loss: 0.000574,	Batch time: 1.319 sec 
+Epoch: 16/150,	Batch: 75/208,	Batch loss: 0.000366,	Batch time: 1.256 sec 
+Epoch: 16/150,	Batch: 76/208,	Batch loss: 0.000414,	Batch time: 1.242 sec 
+Epoch: 16/150,	Batch: 77/208,	Batch loss: 0.000248,	Batch time: 1.297 sec 
+Epoch: 16/150,	Batch: 78/208,	Batch loss: 0.000140,	Batch time: 1.324 sec 
+Epoch: 16/150,	Batch: 79/208,	Batch loss: 0.000458,	Batch time: 1.278 sec 
+Epoch: 16/150,	Batch: 80/208,	Batch loss: 0.000392,	Batch time: 1.246 sec 
+Epoch: 16/150,	Batch: 81/208,	Batch loss: 0.000453,	Batch time: 1.294 sec 
+Epoch: 16/150,	Batch: 82/208,	Batch loss: 0.000290,	Batch time: 1.304 sec 
+Epoch: 16/150,	Batch: 83/208,	Batch loss: 0.000355,	Batch time: 1.314 sec 
+Epoch: 16/150,	Batch: 84/208,	Batch loss: 0.000263,	Batch time: 1.304 sec 
+Epoch: 16/150,	Batch: 85/208,	Batch loss: 0.001088,	Batch time: 1.284 sec 
+Epoch: 16/150,	Batch: 86/208,	Batch loss: 0.000447,	Batch time: 1.302 sec 
+Epoch: 16/150,	Batch: 87/208,	Batch loss: 0.000320,	Batch time: 1.292 sec 
+Epoch: 16/150,	Batch: 88/208,	Batch loss: 0.000494,	Batch time: 1.290 sec 
+Epoch: 16/150,	Batch: 89/208,	Batch loss: 0.000588,	Batch time: 1.268 sec 
+Epoch: 16/150,	Batch: 90/208,	Batch loss: 0.000185,	Batch time: 1.271 sec 
+Epoch: 16/150,	Batch: 91/208,	Batch loss: 0.000426,	Batch time: 1.259 sec 
+Epoch: 16/150,	Batch: 92/208,	Batch loss: 0.000518,	Batch time: 1.276 sec 
+Epoch: 16/150,	Batch: 93/208,	Batch loss: 0.000614,	Batch time: 1.250 sec 
+Epoch: 16/150,	Batch: 94/208,	Batch loss: 0.000461,	Batch time: 1.252 sec 
+Epoch: 16/150,	Batch: 95/208,	Batch loss: 0.000447,	Batch time: 1.266 sec 
+Epoch: 16/150,	Batch: 96/208,	Batch loss: 0.000560,	Batch time: 1.261 sec 
+Epoch: 16/150,	Batch: 97/208,	Batch loss: 0.000433,	Batch time: 1.255 sec 
+Epoch: 16/150,	Batch: 98/208,	Batch loss: 0.000377,	Batch time: 1.243 sec 
+Epoch: 16/150,	Batch: 99/208,	Batch loss: 0.000388,	Batch time: 1.260 sec 
+Epoch: 16/150,	Batch: 100/208,	Batch loss: 0.000413,	Batch time: 1.248 sec 
+Epoch: 16/150,	Batch: 101/208,	Batch loss: 0.000869,	Batch time: 1.303 sec 
+Epoch: 16/150,	Batch: 102/208,	Batch loss: 0.000238,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 103/208,	Batch loss: 0.000462,	Batch time: 1.288 sec 
+Epoch: 16/150,	Batch: 104/208,	Batch loss: 0.000704,	Batch time: 1.302 sec 
+Epoch: 16/150,	Batch: 105/208,	Batch loss: 0.000417,	Batch time: 1.261 sec 
+Epoch: 16/150,	Batch: 106/208,	Batch loss: 0.000231,	Batch time: 1.261 sec 
+Epoch: 16/150,	Batch: 107/208,	Batch loss: 0.000244,	Batch time: 1.268 sec 
+Epoch: 16/150,	Batch: 108/208,	Batch loss: 0.002418,	Batch time: 1.304 sec 
+Epoch: 16/150,	Batch: 109/208,	Batch loss: 0.000670,	Batch time: 1.302 sec 
+Epoch: 16/150,	Batch: 110/208,	Batch loss: 0.000325,	Batch time: 1.293 sec 
+Epoch: 16/150,	Batch: 111/208,	Batch loss: 0.000331,	Batch time: 1.289 sec 
+Epoch: 16/150,	Batch: 112/208,	Batch loss: 0.001065,	Batch time: 1.322 sec 
+Epoch: 16/150,	Batch: 113/208,	Batch loss: 0.000246,	Batch time: 1.274 sec 
+Epoch: 16/150,	Batch: 114/208,	Batch loss: 0.000371,	Batch time: 1.308 sec 
+Epoch: 16/150,	Batch: 115/208,	Batch loss: 0.000604,	Batch time: 1.253 sec 
+Epoch: 16/150,	Batch: 116/208,	Batch loss: 0.001010,	Batch time: 1.252 sec 
+Epoch: 16/150,	Batch: 117/208,	Batch loss: 0.000198,	Batch time: 1.261 sec 
+Epoch: 16/150,	Batch: 118/208,	Batch loss: 0.000606,	Batch time: 1.292 sec 
+Epoch: 16/150,	Batch: 119/208,	Batch loss: 0.000593,	Batch time: 1.289 sec 
+Epoch: 16/150,	Batch: 120/208,	Batch loss: 0.000340,	Batch time: 1.309 sec 
+Epoch: 16/150,	Batch: 121/208,	Batch loss: 0.000268,	Batch time: 1.298 sec 
+Epoch: 16/150,	Batch: 122/208,	Batch loss: 0.000535,	Batch time: 1.256 sec 
+Epoch: 16/150,	Batch: 123/208,	Batch loss: 0.000375,	Batch time: 1.280 sec 
+Epoch: 16/150,	Batch: 124/208,	Batch loss: 0.000481,	Batch time: 1.280 sec 
+Epoch: 16/150,	Batch: 125/208,	Batch loss: 0.000336,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 126/208,	Batch loss: 0.000332,	Batch time: 1.286 sec 
+Epoch: 16/150,	Batch: 127/208,	Batch loss: 0.000882,	Batch time: 1.262 sec 
+Epoch: 16/150,	Batch: 128/208,	Batch loss: 0.000307,	Batch time: 1.280 sec 
+Epoch: 16/150,	Batch: 129/208,	Batch loss: 0.000297,	Batch time: 1.267 sec 
+Epoch: 16/150,	Batch: 130/208,	Batch loss: 0.000470,	Batch time: 1.268 sec 
+Epoch: 16/150,	Batch: 131/208,	Batch loss: 0.000382,	Batch time: 1.278 sec 
+Epoch: 16/150,	Batch: 132/208,	Batch loss: 0.000152,	Batch time: 1.256 sec 
+Epoch: 16/150,	Batch: 133/208,	Batch loss: 0.000523,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 134/208,	Batch loss: 0.000122,	Batch time: 1.342 sec 
+Epoch: 16/150,	Batch: 135/208,	Batch loss: 0.000444,	Batch time: 1.318 sec 
+Epoch: 16/150,	Batch: 136/208,	Batch loss: 0.000242,	Batch time: 1.303 sec 
+Epoch: 16/150,	Batch: 137/208,	Batch loss: 0.000403,	Batch time: 1.259 sec 
+Epoch: 16/150,	Batch: 138/208,	Batch loss: 0.000196,	Batch time: 1.258 sec 
+Epoch: 16/150,	Batch: 139/208,	Batch loss: 0.000436,	Batch time: 1.255 sec 
+Epoch: 16/150,	Batch: 140/208,	Batch loss: 0.000115,	Batch time: 1.273 sec 
+Epoch: 16/150,	Batch: 141/208,	Batch loss: 0.000221,	Batch time: 1.285 sec 
+Epoch: 16/150,	Batch: 142/208,	Batch loss: 0.000793,	Batch time: 1.293 sec 
+Epoch: 16/150,	Batch: 143/208,	Batch loss: 0.000296,	Batch time: 1.238 sec 
+Epoch: 16/150,	Batch: 144/208,	Batch loss: 0.000101,	Batch time: 1.274 sec 
+Epoch: 16/150,	Batch: 145/208,	Batch loss: 0.000649,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 146/208,	Batch loss: 0.000353,	Batch time: 1.248 sec 
+Epoch: 16/150,	Batch: 147/208,	Batch loss: 0.000282,	Batch time: 1.244 sec 
+Epoch: 16/150,	Batch: 148/208,	Batch loss: 0.000236,	Batch time: 1.237 sec 
+Epoch: 16/150,	Batch: 149/208,	Batch loss: 0.000498,	Batch time: 1.251 sec 
+Epoch: 16/150,	Batch: 150/208,	Batch loss: 0.000610,	Batch time: 1.250 sec 
+Epoch: 16/150,	Batch: 151/208,	Batch loss: 0.000487,	Batch time: 1.298 sec 
+Epoch: 16/150,	Batch: 152/208,	Batch loss: 0.001204,	Batch time: 1.276 sec 
+Epoch: 16/150,	Batch: 153/208,	Batch loss: 0.000586,	Batch time: 1.252 sec 
+Epoch: 16/150,	Batch: 154/208,	Batch loss: 0.000561,	Batch time: 1.259 sec 
+Epoch: 16/150,	Batch: 155/208,	Batch loss: 0.000319,	Batch time: 1.281 sec 
+Epoch: 16/150,	Batch: 156/208,	Batch loss: 0.000453,	Batch time: 1.260 sec 
+Epoch: 16/150,	Batch: 157/208,	Batch loss: 0.000668,	Batch time: 1.262 sec 
+Epoch: 16/150,	Batch: 158/208,	Batch loss: 0.000155,	Batch time: 1.256 sec 
+Epoch: 16/150,	Batch: 159/208,	Batch loss: 0.000370,	Batch time: 1.238 sec 
+Epoch: 16/150,	Batch: 160/208,	Batch loss: 0.000353,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 161/208,	Batch loss: 0.000253,	Batch time: 1.262 sec 
+Epoch: 16/150,	Batch: 162/208,	Batch loss: 0.000552,	Batch time: 1.298 sec 
+Epoch: 16/150,	Batch: 163/208,	Batch loss: 0.000236,	Batch time: 1.280 sec 
+Epoch: 16/150,	Batch: 164/208,	Batch loss: 0.000416,	Batch time: 1.303 sec 
+Epoch: 16/150,	Batch: 165/208,	Batch loss: 0.000563,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 166/208,	Batch loss: 0.000717,	Batch time: 1.307 sec 
+Epoch: 16/150,	Batch: 167/208,	Batch loss: 0.000436,	Batch time: 1.288 sec 
+Epoch: 16/150,	Batch: 168/208,	Batch loss: 0.000406,	Batch time: 1.285 sec 
+Epoch: 16/150,	Batch: 169/208,	Batch loss: 0.000091,	Batch time: 1.283 sec 
+Epoch: 16/150,	Batch: 170/208,	Batch loss: 0.000208,	Batch time: 1.282 sec 
+Epoch: 16/150,	Batch: 171/208,	Batch loss: 0.000394,	Batch time: 1.266 sec 
+Epoch: 16/150,	Batch: 172/208,	Batch loss: 0.000600,	Batch time: 1.273 sec 
+Epoch: 16/150,	Batch: 173/208,	Batch loss: 0.000452,	Batch time: 1.263 sec 
+Epoch: 16/150,	Batch: 174/208,	Batch loss: 0.000430,	Batch time: 1.276 sec 
+Epoch: 16/150,	Batch: 175/208,	Batch loss: 0.000561,	Batch time: 1.281 sec 
+Epoch: 16/150,	Batch: 176/208,	Batch loss: 0.000488,	Batch time: 1.291 sec 
+Epoch: 16/150,	Batch: 177/208,	Batch loss: 0.000384,	Batch time: 1.316 sec 
+Epoch: 16/150,	Batch: 178/208,	Batch loss: 0.000145,	Batch time: 1.289 sec 
+Epoch: 16/150,	Batch: 179/208,	Batch loss: 0.000627,	Batch time: 1.301 sec 
+Epoch: 16/150,	Batch: 180/208,	Batch loss: 0.000405,	Batch time: 1.259 sec 
+Epoch: 16/150,	Batch: 181/208,	Batch loss: 0.000676,	Batch time: 1.273 sec 
+Epoch: 16/150,	Batch: 182/208,	Batch loss: 0.000580,	Batch time: 1.261 sec 
+Epoch: 16/150,	Batch: 183/208,	Batch loss: 0.000411,	Batch time: 1.256 sec 
+Epoch: 16/150,	Batch: 184/208,	Batch loss: 0.000200,	Batch time: 1.269 sec 
+Epoch: 16/150,	Batch: 185/208,	Batch loss: 0.000675,	Batch time: 1.289 sec 
+Epoch: 16/150,	Batch: 186/208,	Batch loss: 0.000178,	Batch time: 1.304 sec 
+Epoch: 16/150,	Batch: 187/208,	Batch loss: 0.000415,	Batch time: 1.277 sec 
+Epoch: 16/150,	Batch: 188/208,	Batch loss: 0.000271,	Batch time: 1.277 sec 
+Epoch: 16/150,	Batch: 189/208,	Batch loss: 0.000114,	Batch time: 1.272 sec 
+Epoch: 16/150,	Batch: 190/208,	Batch loss: 0.000297,	Batch time: 1.253 sec 
+Epoch: 16/150,	Batch: 191/208,	Batch loss: 0.000433,	Batch time: 1.248 sec 
+Epoch: 16/150,	Batch: 192/208,	Batch loss: 0.000540,	Batch time: 1.258 sec 
+Epoch: 16/150,	Batch: 193/208,	Batch loss: 0.000293,	Batch time: 1.278 sec 
+Epoch: 16/150,	Batch: 194/208,	Batch loss: 0.000397,	Batch time: 1.285 sec 
+Epoch: 16/150,	Batch: 195/208,	Batch loss: 0.001007,	Batch time: 1.260 sec 
+Epoch: 16/150,	Batch: 196/208,	Batch loss: 0.000517,	Batch time: 1.268 sec 
+Epoch: 16/150,	Batch: 197/208,	Batch loss: 0.000432,	Batch time: 1.295 sec 
+Epoch: 16/150,	Batch: 198/208,	Batch loss: 0.000319,	Batch time: 1.281 sec 
+Epoch: 16/150,	Batch: 199/208,	Batch loss: 0.000579,	Batch time: 1.247 sec 
+Epoch: 16/150,	Batch: 200/208,	Batch loss: 0.000411,	Batch time: 1.283 sec 
+Epoch: 16/150,	Batch: 201/208,	Batch loss: 0.000716,	Batch time: 1.310 sec 
+Epoch: 16/150,	Batch: 202/208,	Batch loss: 0.000383,	Batch time: 1.280 sec 
+Epoch: 16/150,	Batch: 203/208,	Batch loss: 0.000443,	Batch time: 1.294 sec 
+Epoch: 16/150,	Batch: 204/208,	Batch loss: 0.000695,	Batch time: 1.265 sec 
+Epoch: 16/150,	Batch: 205/208,	Batch loss: 0.000173,	Batch time: 1.293 sec 
+Epoch: 16/150,	Batch: 206/208,	Batch loss: 0.000290,	Batch time: 1.282 sec 
+Epoch: 16/150,	Batch: 207/208,	Batch loss: 0.000550,	Batch time: 1.286 sec 
+Epoch: 16/150,	Batch: 208/208,	Batch loss: 0.000354,	Batch time: 1.281 sec 
+
+Validation phase for epoch 16.
+
+Epoch: 16/150,	Batch: 1/52,	Batch time: 0.958 sec 
+Epoch: 16/150,	Batch: 2/52,	Batch time: 0.955 sec 
+Epoch: 16/150,	Batch: 3/52,	Batch time: 0.987 sec 
+Epoch: 16/150,	Batch: 4/52,	Batch time: 0.989 sec 
+Epoch: 16/150,	Batch: 5/52,	Batch time: 0.970 sec 
+Epoch: 16/150,	Batch: 6/52,	Batch time: 0.951 sec 
+Epoch: 16/150,	Batch: 7/52,	Batch time: 0.961 sec 
+Epoch: 16/150,	Batch: 8/52,	Batch time: 0.956 sec 
+Epoch: 16/150,	Batch: 9/52,	Batch time: 0.963 sec 
+Epoch: 16/150,	Batch: 10/52,	Batch time: 0.937 sec 
+Epoch: 16/150,	Batch: 11/52,	Batch time: 0.931 sec 
+Epoch: 16/150,	Batch: 12/52,	Batch time: 0.932 sec 
+Epoch: 16/150,	Batch: 13/52,	Batch time: 0.953 sec 
+Epoch: 16/150,	Batch: 14/52,	Batch time: 0.956 sec 
+Epoch: 16/150,	Batch: 15/52,	Batch time: 0.939 sec 
+Epoch: 16/150,	Batch: 16/52,	Batch time: 0.956 sec 
+Epoch: 16/150,	Batch: 17/52,	Batch time: 0.963 sec 
+Epoch: 16/150,	Batch: 18/52,	Batch time: 0.942 sec 
+Epoch: 16/150,	Batch: 19/52,	Batch time: 0.961 sec 
+Epoch: 16/150,	Batch: 20/52,	Batch time: 0.946 sec 
+Epoch: 16/150,	Batch: 21/52,	Batch time: 0.948 sec 
+Epoch: 16/150,	Batch: 22/52,	Batch time: 0.944 sec 
+Epoch: 16/150,	Batch: 23/52,	Batch time: 0.951 sec 
+Epoch: 16/150,	Batch: 24/52,	Batch time: 0.947 sec 
+Epoch: 16/150,	Batch: 25/52,	Batch time: 0.939 sec 
+Epoch: 16/150,	Batch: 26/52,	Batch time: 0.942 sec 
+Epoch: 16/150,	Batch: 27/52,	Batch time: 0.940 sec 
+Epoch: 16/150,	Batch: 28/52,	Batch time: 0.950 sec 
+Epoch: 16/150,	Batch: 29/52,	Batch time: 0.953 sec 
+Epoch: 16/150,	Batch: 30/52,	Batch time: 0.955 sec 
+Epoch: 16/150,	Batch: 31/52,	Batch time: 0.950 sec 
+Epoch: 16/150,	Batch: 32/52,	Batch time: 0.946 sec 
+Epoch: 16/150,	Batch: 33/52,	Batch time: 0.941 sec 
+Epoch: 16/150,	Batch: 34/52,	Batch time: 0.963 sec 
+Epoch: 16/150,	Batch: 35/52,	Batch time: 0.968 sec 
+Epoch: 16/150,	Batch: 36/52,	Batch time: 0.978 sec 
+Epoch: 16/150,	Batch: 37/52,	Batch time: 0.935 sec 
+Epoch: 16/150,	Batch: 38/52,	Batch time: 0.930 sec 
+Epoch: 16/150,	Batch: 39/52,	Batch time: 0.921 sec 
+Epoch: 16/150,	Batch: 40/52,	Batch time: 0.927 sec 
+Epoch: 16/150,	Batch: 41/52,	Batch time: 0.923 sec 
+Epoch: 16/150,	Batch: 42/52,	Batch time: 0.950 sec 
+Epoch: 16/150,	Batch: 43/52,	Batch time: 0.967 sec 
+Epoch: 16/150,	Batch: 44/52,	Batch time: 0.986 sec 
+Epoch: 16/150,	Batch: 45/52,	Batch time: 0.950 sec 
+Epoch: 16/150,	Batch: 46/52,	Batch time: 0.943 sec 
+Epoch: 16/150,	Batch: 47/52,	Batch time: 0.955 sec 
+Epoch: 16/150,	Batch: 48/52,	Batch time: 0.927 sec 
+Epoch: 16/150,	Batch: 49/52,	Batch time: 0.936 sec 
+Epoch: 16/150,	Batch: 50/52,	Batch time: 0.917 sec 
+Epoch: 16/150,	Batch: 51/52,	Batch time: 0.933 sec 
+Epoch: 16/150,	Batch: 52/52,	Batch time: 0.944 sec 
+
+Epoch 16 done. Epoch time: 322.245 sec, Train loss: 0.000459, Train Accuracy: 100.000 %, Valid Accuracy: 93.538 %
+
+Epoch: 17/150,	Batch: 1/208,	Batch loss: 0.000364,	Batch time: 1.272 sec 
+Epoch: 17/150,	Batch: 2/208,	Batch loss: 0.000143,	Batch time: 1.277 sec 
+Epoch: 17/150,	Batch: 3/208,	Batch loss: 0.000504,	Batch time: 1.279 sec 
+Epoch: 17/150,	Batch: 4/208,	Batch loss: 0.000276,	Batch time: 1.250 sec 
+Epoch: 17/150,	Batch: 5/208,	Batch loss: 0.000535,	Batch time: 1.271 sec 
+Epoch: 17/150,	Batch: 6/208,	Batch loss: 0.000368,	Batch time: 1.286 sec 
+Epoch: 17/150,	Batch: 7/208,	Batch loss: 0.000201,	Batch time: 1.274 sec 
+Epoch: 17/150,	Batch: 8/208,	Batch loss: 0.000230,	Batch time: 1.288 sec 
+Epoch: 17/150,	Batch: 9/208,	Batch loss: 0.000144,	Batch time: 1.314 sec 
+Epoch: 17/150,	Batch: 10/208,	Batch loss: 0.000494,	Batch time: 1.294 sec 
+Epoch: 17/150,	Batch: 11/208,	Batch loss: 0.000380,	Batch time: 1.339 sec 
+Epoch: 17/150,	Batch: 12/208,	Batch loss: 0.000210,	Batch time: 1.302 sec 
+Epoch: 17/150,	Batch: 13/208,	Batch loss: 0.000289,	Batch time: 1.289 sec 
+Epoch: 17/150,	Batch: 14/208,	Batch loss: 0.000380,	Batch time: 1.256 sec 
+Epoch: 17/150,	Batch: 15/208,	Batch loss: 0.000565,	Batch time: 1.293 sec 
+Epoch: 17/150,	Batch: 16/208,	Batch loss: 0.000373,	Batch time: 1.302 sec 
+Epoch: 17/150,	Batch: 17/208,	Batch loss: 0.000217,	Batch time: 1.299 sec 
+Epoch: 17/150,	Batch: 18/208,	Batch loss: 0.000462,	Batch time: 1.302 sec 
+Epoch: 17/150,	Batch: 19/208,	Batch loss: 0.000656,	Batch time: 1.302 sec 
+Epoch: 17/150,	Batch: 20/208,	Batch loss: 0.000259,	Batch time: 1.318 sec 
+Epoch: 17/150,	Batch: 21/208,	Batch loss: 0.000426,	Batch time: 1.307 sec 
+Epoch: 17/150,	Batch: 22/208,	Batch loss: 0.000261,	Batch time: 1.289 sec 
+Epoch: 17/150,	Batch: 23/208,	Batch loss: 0.000496,	Batch time: 1.276 sec 
+Epoch: 17/150,	Batch: 24/208,	Batch loss: 0.000242,	Batch time: 1.294 sec 
+Epoch: 17/150,	Batch: 25/208,	Batch loss: 0.000314,	Batch time: 1.305 sec 
+Epoch: 17/150,	Batch: 26/208,	Batch loss: 0.000395,	Batch time: 1.305 sec 
+Epoch: 17/150,	Batch: 27/208,	Batch loss: 0.000363,	Batch time: 1.256 sec 
+Epoch: 17/150,	Batch: 28/208,	Batch loss: 0.000220,	Batch time: 1.271 sec 
+Epoch: 17/150,	Batch: 29/208,	Batch loss: 0.000241,	Batch time: 1.258 sec 
+Epoch: 17/150,	Batch: 30/208,	Batch loss: 0.000739,	Batch time: 1.250 sec 
+Epoch: 17/150,	Batch: 31/208,	Batch loss: 0.000217,	Batch time: 1.280 sec 
+Epoch: 17/150,	Batch: 32/208,	Batch loss: 0.000560,	Batch time: 1.300 sec 
