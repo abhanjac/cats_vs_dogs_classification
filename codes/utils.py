@@ -90,10 +90,6 @@ def createBatch( listOfImg=None, batchSize=None, createLabels=True, \
     listOfImg = list( set( listOfImg ) - set( listOfBatchImg ) )
     
     if createLabels:
-        # If this batch is created for training or validation set, only then 
-        # labels are needed. Labels may not be needed during testing (and it 
-        # may not be possible to extract labels from test filenames either.
-
         # Takes filepath of an image and extracts label from that using 
         # className2labelIdx dictionary.
         extractLabel = lambda x: className2labelIdx[ re.split( '\.|/| ', x )[-3] ]
@@ -251,7 +247,7 @@ def rename( location=None, categoryName=None, replace=False, startIdx=0 ):
         
     # Now all the files in the newLocation will be renamed.
     listOfFiles = os.listdir( newLocation )    # List of files in the location.
-    sorted( listOfFiles )       # Files are sorted in place before renaming.
+    listOfFiles.sort()       # Sorts in place.
     nFiles = len( listOfFiles )
     
     # Renaming the files one by one.
