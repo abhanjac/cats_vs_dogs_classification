@@ -425,7 +425,7 @@ class CDclassifier( object ):
             print( '\nStarted Training...' )
             
             for epoch in range( startEpoch, nEpochs+1 ):
-                # epoch will be numbered from 1 to 159 if there are 150 epochs.
+                # epoch will be numbered from 1 to 150 if there are 150 epochs.
                 # Is is not numbered from 0 to 149.
 
                 self.isTraining = True    # Enabling training flag at the start of 
