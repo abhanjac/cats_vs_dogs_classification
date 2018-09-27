@@ -856,10 +856,6 @@ class CDclassifier( object ):
                 listOfModelVars.append( v )
                 #print( 'Model variable: ', v )
 
-        # Evaluating the predicted probability and label.
-        predProb = tf.nn.softmax( predLogits, axis=-1 )
-        predLabel = tf.argmax( predProb, axis=-1 )
-
 #-------------------------------------------------------------------------------
 
         # START SESSION.
