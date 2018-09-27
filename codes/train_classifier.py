@@ -894,12 +894,12 @@ class CDclassifier( object ):
             inferLayerOut = sess.run( self.layerOut, feed_dict=feedDict )
             inferPredLogits = sess.run( predLogits, feed_dict=feedDict )
 
-            # The inferPredLogits is an array of logits. It needs to be 
-            # converted to sigmoid to get probability and then we need
-            # to extract the max index to get the labels.
-            inferPredProb = sess.run( predProb, feed_dict=feedDict )
-            inferPredLabel = sess.run( predLabel, feed_dict=feedDict )
-
+        # The inferPredLogits is an array of logits. It needs to be 
+        # converted to sigmoid to get probability and then we need
+        # to extract the max index to get the labels.
+        inferPredProb = np.array( softmax( inferPredLogits[0] ) )
+        inferPredLabel = np.argmax( inferPredProb )
+        
         return inferLayerOut, inferPredLabel, inferPredLogits, inferPredProb, \
                                                 mean, std
     
