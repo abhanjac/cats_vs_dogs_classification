@@ -228,6 +228,8 @@ class CDclassifier( object ):
         x = tf.layers.dropout( x, rate=keepProb, training=self.isTraining, name=layerName )
         self.layerOut[ layerName ] = x
 
+        # Output size 512.
+
         return x
     
 #===============================================================================
