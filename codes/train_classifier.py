@@ -213,6 +213,8 @@ class CDclassifier( object ):
         
         self.layerOut[ layerName ] = x
 
+        # Output size 1 x 1 x 512 (H x W x C).
+
 #-------------------------------------------------------------------------------
 
         layerIdx = '8'      # Input size 1 x 1 x 512 (H x W x C).
