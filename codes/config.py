@@ -20,6 +20,7 @@ nEpochs = 150
 # avgHeight: 360.3, avgWidth: 404.14
 
 inputImgH, inputImgW = 224, 224
+finalLayerH, finalLayerW = 14, 14
 
 # Some model design parameters.
 modelName = 'model'
