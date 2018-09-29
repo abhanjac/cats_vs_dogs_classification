@@ -86,6 +86,8 @@ class CDclassifier( object ):
                                         padding='SAME', name=layerName )
         self.layerOut[ layerName ] = x
 
+        # Output size 56 x 56 x 64 (H x W x C).
+
 #-------------------------------------------------------------------------------
 
         layerIdx = '3'      # Input size 56 x 56 x 64 (H x W x C).
@@ -107,6 +109,8 @@ class CDclassifier( object ):
         x = tf.layers.max_pooling2d( x, pool_size=(2,2), strides=2, \
                                         padding='SAME', name=layerName )
         self.layerOut[ layerName ] = x
+
+        # Output size 28 x 28 x 128 (H x W x C).
 
 #-------------------------------------------------------------------------------
 
@@ -130,6 +134,8 @@ class CDclassifier( object ):
                                         padding='SAME', name=layerName )
         self.layerOut[ layerName ] = x
 
+        # Output size 14 x 14 x 256 (H x W x C).
+
 #-------------------------------------------------------------------------------
 
         layerIdx = '5'      # Input size 14 x 14 x 256 (H x W x C).
@@ -151,6 +157,8 @@ class CDclassifier( object ):
         #x = tf.layers.max_pooling2d( x, pool_size=(2,2), strides=2, \
                                         #padding='SAME', name=layerName )
         #self.layerOut[ layerName ] = x
+
+        # Output size 14 x 14 x 512 (H x W x C).
 
 #-------------------------------------------------------------------------------
 
