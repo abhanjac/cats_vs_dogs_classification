@@ -182,6 +182,8 @@ class CDclassifier( object ):
                                         #padding='SAME', name=layerName )
         #self.layerOut[ layerName ] = x
 
+        # Output size 14 x 14 x 256 (H x W x C).
+
 #------------------------------------------------------------------------------
 
         layerIdx = '7'      # Input size 14 x 14 x 256 (H x W x C).
