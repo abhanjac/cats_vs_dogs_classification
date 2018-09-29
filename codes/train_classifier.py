@@ -154,7 +154,6 @@ class CDclassifier( object ):
 
 #-------------------------------------------------------------------------------
 
-        # Layer 6. Input size 14 x 14 (L x W).
         layerIdx = '6'      # Input size 14 x 14 x 512 (H x W x C).
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(1,1), filters=256, padding='SAME', \
@@ -177,7 +176,6 @@ class CDclassifier( object ):
 
 #------------------------------------------------------------------------------
 
-        # Layer 7. Input size 14 x 14 (L x W).
         layerIdx = '7'      # Input size 14 x 14 x 256 (H x W x C).
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=512, padding='SAME', \
@@ -207,8 +205,7 @@ class CDclassifier( object ):
 
 #-------------------------------------------------------------------------------
 
-        # Layer 8. Input size 1 x 1 (L x W).
-        layerIdx = '8'
+        layerIdx = '8'      # Input size 1 x 1 x 512 (H x W x C).
         layerName = 'dense' + layerIdx
         # No activation applied to the fc layer. Can be added outside if needed.
         x = tf.layers.dense( x, units=nClasses, use_bias=True, name=layerName, \
