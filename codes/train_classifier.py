@@ -199,7 +199,7 @@ class CDclassifier( object ):
         # This next layer will behave as the global average pooling layer. So 
         # the padding has to be 'VALID' here to give a 1x1 output size. 
         layerName = 'pooling' + layerIdx
-        x = tf.layers.max_pooling2d( x, pool_size=(14,14), strides=1, \
+        x = tf.layers.max_pooling2d( x, pool_size=(finalLayerH, finalLayerW), strides=1, \
                                         padding='VALID', name=layerName )
         
         x = tf.layers.flatten(x)    # This will keep the 0th dimension 
