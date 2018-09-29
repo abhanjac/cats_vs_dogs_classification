@@ -42,8 +42,7 @@ class CDclassifier( object ):
         '''
         x = tf.convert_to_tensor(x)
 
-        # Layer 1. Input size 224 x 224 (L x W).
-        layerIdx = '1'
+        layerIdx = '1'      # Input size 224 x 224 x 3 (H x W x C).
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=32, padding='SAME', \
                 use_bias=False, activation=None, name=layerName, \
@@ -62,11 +61,12 @@ class CDclassifier( object ):
         x = tf.layers.max_pooling2d( x, pool_size=(2,2), strides=2, \
                                         padding='SAME', name=layerName )
         self.layerOut[ layerName ] = x
+        
+        # Output size 112 x 112 x 3 (H x W x C).
 
 #-------------------------------------------------------------------------------
 
-        # Layer 2. Input size 112 x 112 (L x W).
-        layerIdx = '2'
+        layerIdx = '2'      # Input size 112 x 112 x 32 (H x W x C).
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=64, padding='SAME', \
                 use_bias=False, activation=None, name=layerName, \
@@ -88,8 +88,7 @@ class CDclassifier( object ):
 
 #-------------------------------------------------------------------------------
 
-        # Layer 3. Input size 56 x 56 (L x W).
-        layerIdx = '3'
+        layerIdx = '3'      # Input size 56 x 56 x 64 (H x W x C).
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=128, padding='SAME', \
                 use_bias=False, activation=None, name=layerName, \
@@ -111,8 +110,7 @@ class CDclassifier( object ):
 
 #-------------------------------------------------------------------------------
 
-        # Layer 4. Input size 28 x 28 (L x W).
-        layerIdx = '4'
+        layerIdx = '4'      # Input size 28 x 28 x 128 (H x W x C).
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=256, padding='SAME', \
                 use_bias=False, activation=None, name=layerName, \
