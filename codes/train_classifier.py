@@ -132,8 +132,7 @@ class CDclassifier( object ):
 
 #-------------------------------------------------------------------------------
 
-        # Layer 5. Input size 14 x 14 (L x W).
-        layerIdx = '5'
+        layerIdx = '5'      # Input size 14 x 14 x 256 (H x W x C).
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(3,3), filters=512, padding='SAME', \
                 use_bias=False, activation=None, name=layerName, \
@@ -156,7 +155,7 @@ class CDclassifier( object ):
 #-------------------------------------------------------------------------------
 
         # Layer 6. Input size 14 x 14 (L x W).
-        layerIdx = '6'
+        layerIdx = '6'      # Input size 14 x 14 x 512 (H x W x C).
         layerName = 'conv' + layerIdx
         x = tf.layers.conv2d( x, kernel_size=(1,1), filters=256, padding='SAME', \
                 use_bias=False, activation=None, name=layerName, \
