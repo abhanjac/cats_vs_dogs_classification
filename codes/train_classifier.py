@@ -793,7 +793,22 @@ class CDclassifier( object ):
                 #print( v.name )
                 if v.name == varName + ':0':
                     desiredVar = tf.get_variable( varName )
-                    
+
+#-------------------------------------------------------------------------------
+
+        with tf.variable_scope( modelName, reuse=tf.AUTO_REUSE ):
+            # AUTO_REUSE flag is used so that no error is there when the same 
+            # model parameters are used to check multiple images in sequence.
+            # List of model variables.
+            listOfModelVars = []
+            for v in tf.global_variables():
+                # Include only those variables whose name has this model's name in it.
+                # Also, there is no need to include the optimizer variables as there 
+                # is no training going on.
+                if v.name.find( modelName ) >= 0:
+                    listOfModelVars.append( v )
+                    #print( 'Model: {}, Variable: {}'.format( modelName, v ) )
+
 #-------------------------------------------------------------------------------
 
         # Now we have to evaluate the value of the variable in a session.
@@ -805,7 +820,7 @@ class CDclassifier( object ):
                                                     training=self.isTraining )
             
             if ckptPath != None:    # Only when some checkpoint is found.
-                saver = tf.train.Saver()
+                saver = tf.train.Saver( listOfModelVars )
                 saver.restore( sess, ckptPath )
             else:
                 # When there are no valid checkpoints.
