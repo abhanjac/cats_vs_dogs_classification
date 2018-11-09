@@ -119,7 +119,19 @@ Another **json** file is also saved along with the checkpoint, which contains th
 These information from this json file are reloaded into the model to restart the training, in case the training process got stopped or interrupted because of any reason.
 
 According to the [Weakly-supervised learning with convolutional neural networks paper](http://leon.bottou.org/publications/pdf/cvpr-2015.pdf), the **Global Max-Pooling (GMP)** layer is able to localize the parts of the image which the network emphasizes on to classify objects. 
-In this network as well the GMP layer is used. So , after classification the localzation ability of the GMP layers are tested and the results are shown in the result section.
+In this network as well the GMP layer is used. 
+
+GMP layers are used to reduce the spatial dimensions of a three-dimensional tensor in the final layers of the newtork. A tensor with dimensions **hxwxd** is reduced in size to have dimensions **1x1xd** by the GMP layers. It reduces each hxw feature map to a single number by simply taking the maximum of all points in the hxw feature map. The following figure will make it more clear.
+![](images/global_max_pooling.png)
+
+Once the 1x1xd tensor is formed, its output is flattened and is fed to another dense layer that does the final classification in its output. For this case, the GMP layer forms a 1x1x512 tensor which is flattened into a 512 tensor and then converted by a dense layer (Layer 8) into a tensor of size 2 (equal to the number of output classes) which gives the final classification output.
+
+The dense layer (Layer 8) has a weight coming from each of the nodes of the 512 layer to the final 2 node layer. These weights are collected and multiplied to the 14x14 feature maps of Layer 7 (from which the nodes of Layer 8 are created by the GMP layer). All these multiplied feature maps are then combined together to form a **class activation map** as shown in the following figure.
+![](image/class_activation_mapping.png)
+
+This class activation map shows how the region of the object is localized by the use of the GMP layer.
+
+After classification the localzation ability of the GMP layers are tested and the results are shown in the result section.
 
 # Results:
 ### The final accuracies of the model are as follows:
