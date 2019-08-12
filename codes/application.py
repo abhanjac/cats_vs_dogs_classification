@@ -101,8 +101,10 @@ if __name__ == '__main__':
                 cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,255,0), 2, cv2.LINE_AA )
         
         ## Showing a combined image.
-        #cv2.imshow( 'Image and gmp filter (conv)', np.hstack( ( img, \
-                                            #combinedChannelConvImposed ) ) )
+        #resized = np.hstack( ( img, combinedChannelConvImposed ) )
+        #resized = cv2.resize( resized, (448, 224), interpolation = cv2.INTER_AREA )
+        #cv2.imshow( 'Image and gmp filter (conv)', resized )
+        ##cv2.imwrite( 'combined_' + listOfInferImg[i], resized )
         
         print( 'Actual Label: {}, Predicted Label: {}'.format( \
                     listOfInferImg[i], predictedLabelName ) )
