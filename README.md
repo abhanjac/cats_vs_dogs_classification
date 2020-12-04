@@ -1,6 +1,4 @@
 # Objective: 
-Classify images of **DOGs** or **CATs** into their respective categories and check the localization capability of the **Global Max-Pooling** layer.
-
 This project shows a type of supervised classification where the input images of two example objects, dogs and cats, with classification labels are used to train a convolutional neural network architecture and then the performance of the network is tested on an unseen testing dataset. The network uses global average pooling layer whose output activation layers when superimposed on the input images, creates a heat map. This map shows the regions containing the most important features that the network focusses on to identify the object. The final results achieved a 94% accuracy in classifying objects using the network, trained on a GPU with 20k images.
 
 **A *Trailer* of Final Result:**
