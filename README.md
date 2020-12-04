@@ -5,7 +5,7 @@ Classify images of **DOGs** or **CATs** into their respective categories and che
 
 | | |
 |:---:|:---:|
-| <img src="https://github.com/abhanjac/cats_vs_dogs_classification/blob/master/images/cat.gif" width="240" height="120"> | <img src="https://github.com/abhanjac/cats_vs_dogs_classification/blob/master/images/dog.gif" width=240" height="120"> |
+| <img src="https://github.com/abhanjac/cats_vs_dogs_classification/blob/master/images/cat.gif" width="240" height="120"> | <img src="https://github.com/abhanjac/cats_vs_dogs_classification/blob/master/images/dog.gif" width="240" height="120"> |
 
 [**YouTube Link**](https://www.youtube.com/watch?v=gws5meW1_o0)
 
