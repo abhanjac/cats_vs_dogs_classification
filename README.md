@@ -1,6 +1,16 @@
 # Objective: 
 Classify images of **DOGs** or **CATs** into their respective categories and check the localization capability of the **Global Max-Pooling** layer.
 
+**A *Trailer* of Final Result:**
+
+| | |
+|:---:|:---:|
+| <img src="https://github.com/abhanjac/cats_vs_dogs_classification/blob/master/images/cat.gif" width="240" height="120"> | <img src="https://github.com/abhanjac/cats_vs_dogs_classification/blob/master/images/dog.gif" width=240" height="120"> |
+
+[**YouTube Link**](https://www.youtube.com/watch?v=gws5meW1_o0)
+
+---
+
 This project is to get a good hands on with the tensorflow and getting used to the deep learning concepts.
 Classification is the most basic task that deep learning models or deep neural networks can do. 
 This is a type of supervised learning where the input images of dogs or cats are given to a neural network along with their respective labels (which signifies whether the image is of a dog or a cat).
@@ -117,6 +127,7 @@ Another **json** file is also saved along with the checkpoint, which contains th
 * A statistics of the epoch, learning rate, training loss, training accuracy and validation accuracy upto the current epoch.
 
 These information from this json file are reloaded into the model to restart the training, in case the training process got stopped or interrupted because of any reason.
+**Adam optimizer** was used for the training and **softmax-cross-entropy-loss** was used for the optimization as the classes in the input images are mutually exclusive, cats and dogs both dont appear together in any image.
 
 According to the [Weakly-supervised learning with convolutional neural networks paper](http://leon.bottou.org/publications/pdf/cvpr-2015.pdf), the **Global Max-Pooling (GMP)** layer is able to localize the parts of the image which the network emphasizes on to classify objects. 
 In this network as well the GMP layer is used. 
