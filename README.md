@@ -1,6 +1,8 @@
 # Objective: 
 Classify images of **DOGs** or **CATs** into their respective categories and check the localization capability of the **Global Max-Pooling** layer.
 
+This project shows a type of supervised classification where the input images of two example objects, dogs and cats, with classification labels are used to train a convolutional neural network architecture and then the performance of the network is tested on an unseen testing dataset. The network uses global average pooling layer whose output activation layers when superimposed on the input images, creates a heat map. This map shows the regions containing the most important features that the network focusses on to identify the object. The final results achieved a 94% accuracy in classifying objects using the network, trained on a GPU with 20k images.
+
 **A *Trailer* of Final Result:**
 
 | | |
@@ -11,9 +13,8 @@ Classify images of **DOGs** or **CATs** into their respective categories and che
 
 ---
 
-This project is to get a good hands on with the tensorflow and getting used to the deep learning concepts.
-Classification is the most basic task that deep learning models or deep neural networks can do. 
-This is a type of supervised learning where the input images of dogs or cats are given to a neural network along with their respective labels (which signifies whether the image is of a dog or a cat).
+Classification is the most basic task that deep learning models or task that deep neural networks can do. 
+This project shows a type of supervised classification where the input images of two example objects, dogs and cats, are given to a neural network along with their respective class labels for training.
 The network initially misclassifies the images, but this error in classification is back propagated through the network to make changes to its internal weights and biases of the hidden layers.
 This way the network gradually identifies different features of the objects and starts to make correct classifications.
 The features that the network looks at are however markedly different from what humans use to classify objects. 
